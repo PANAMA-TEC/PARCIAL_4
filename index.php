@@ -46,7 +46,7 @@
 
       </div>
 
-      <svg id="open_login"class="clickeable" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person-circle"
+      <svg id="open_login" class="clickeable" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-person-circle"
         viewBox="0 0 16 16">
         <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
         <path fill-rule="evenodd"
@@ -139,7 +139,7 @@
 
   </div>
 
-  <div id="login" class="barra_formulario_login col" style="display: ;">
+  <div id="login" class="barra_formulario_login col close" style="">
     
     <div  class="login_opciones_close row">
       Cerrar
@@ -153,7 +153,7 @@
     <?php if (!isset($_SESSION['access_token'])): ?>
       <div class="col formulario_login_card">
     <?php else: ?>
-      <div id="formulario_login_card" class="col formulario_login_card close" > <?php endif; ?>
+      <div id="formulario_login_card" class="col formulario_login_card" > <?php endif; ?>
         <label class="font_tittles"> Login de usuarios</label>
         <form class="col formulario_login_main" method="post" action="./assets/php/login.php">
           
