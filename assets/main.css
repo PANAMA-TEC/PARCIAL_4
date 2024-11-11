@@ -1,0 +1,368 @@
+    body{
+        display: flex;
+        align-items: center;        
+        background-color:#BDBDBD;
+        color: white;
+        margin: 0px;
+
+        box-sizing: border-box;
+       
+
+    }
+
+    a {
+        text-decoration: none;
+    }
+    
+    .contenido_pagina_banner{
+        height: 25vh;
+        background-size: 100% ;
+        background-repeat: no-repeat;
+        background-position:0px -200px ;
+        align-items: end;
+        justify-content: end;
+        border-radius: 10px;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+        margin-top: 5px;
+        /* border-style: solid; */
+    }
+
+/* NAVEGADOR SUPERIOR DE LA PAGINA*/
+    .navegador_superior{
+       
+        /* border-style: solid; */
+
+        justify-content:center;
+        align-items: center;
+        gap:20px;
+        background-color: #616161;
+        color: #F5F5F5;
+        width: -webkit-fill-available;
+        height: 100px;
+
+        flex-wrap: wrap-reverse;
+
+    }
+
+    .contenedor_izquierdo_nav{
+        gap: 30px;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .centro_navegador{
+        align-self: center;
+        justify-content: space-between;
+    }
+
+/*CONTENEDORES DE LIBROS*/
+
+    .contenedor_libros {
+        padding: 10px;
+        gap: 10px;
+        justify-content: start;
+        align-items: center;
+        overflow-y: auto;
+        height: 60vh;
+    }
+
+    .contenedor_libros::-webkit-scrollbar {
+        display: none;
+      }
+
+    .contenedor-horizontal-libros{
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 20px;
+        padding: 10px;
+        /* border-style: solid; */
+
+    }
+
+    .contenedor_libros_loader {
+        border: 16px solid #f3f3f3; /* Light grey */
+        border-top: 16px solid #616161; /* Blue */
+        border-radius: 50%;
+        
+        width: 120px;
+        height: 120px;
+        
+        animation: spin 2s linear infinite;
+        align-self: center;
+        justify-self: center;
+        align-items: center;
+        margin-top: 40px;
+        
+      }
+      
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+
+      @-webkit-keyframes spin {
+        0% { -webkit-transform: rotate(0deg); }
+        100% { -webkit-transform: rotate(360deg); }
+      }
+
+/* ESTILO PARA AJUSTAR LAS COLUMNDAS, FILAS POR CADA DIV. ETC*/
+
+    .row {
+        display: flex;
+        flex-direction: row;
+    }
+        
+    .col {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .contenedor {
+        width: 60vw;
+    }
+
+    .clickeable{
+        cursor: pointer;
+    }
+
+    .font_tittles {
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .font_form_tittles {
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 10px;
+
+    }
+
+    .shadow {
+        box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    }
+
+   
+
+/*ESTILOS PARA EL BUSCADOR DE LIBROS.*/
+
+  .buscador{
+    /* height: 100px; */
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 10px;
+    /* border-style: solid; */
+    background-color: #4CAF50;
+    border-radius: 10px;
+    padding: 10px 20px 10px 10px;
+    width:  -webkit-fill-available;
+    
+    
+  }
+
+  .buscador>input{
+    width: 90%; 
+    padding:15px 50px;
+    height: -webkit-fill-available;
+    border-radius: 50px;
+    font-size: 20px;
+  }
+
+/*LIBROS*/
+
+    .libro{
+        position: relative;  height: 220px; width: 160px; 
+        cursor: pointer;
+    }
+
+    .libro_imagen {
+        background-image: url("./images/test_portada.jpg");
+        background-size: 100% 100%;
+    }
+
+    .libro_caratula_inferior{
+        position: absolute;  border-radius: 10px; height: 100%; width: 100%; background-color: green; z-index: 0;
+    }
+
+    .libro_paginas{
+        position: absolute;   border-radius: 10px; height: 98%; top:1.5%; width:98%; background-color: white; z-index: 1;
+    }
+
+    .libro_portada{
+        position: absolute;  border-radius: 10px;  height: 100%; width: 95%; z-index: 3; 
+        background-color: green; 
+        box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    }
+
+/*DETALLE LIBRO */
+
+    .detalle_libro{
+        position: absolute;
+        top:0px;
+        left: 0px;
+        z-index: 100;
+        height: 100vh;
+        width: 100vw;
+        background-color: rgba(0, 0, 0, 0.527);
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .detalle_libro_contenedor{
+        background-color: white;
+        width: 70%;
+        height: 90%;
+        
+        
+        color: #616161;
+        gap: 20px;
+    }
+
+    .detalle_libro_detalles{
+        background-color: white;
+        width: 70%;
+        height: 90%;
+        
+        padding: 50px;
+        color: #616161;
+        
+
+        justify-content: space-between;
+    }
+
+    .detalle_libro_detalles_opciones{
+        gap:20px;
+        align-items: center;
+        justify-content: end;
+
+    }
+
+    .detalle_libro_detalles_informacion{
+        gap:120px;
+        /* border-style: solid; */
+        height: -webkit-fill-available;
+        
+
+    }
+
+    .detalle_libro_detalles_informacion_titulo{
+        
+        font-size: 22px;
+        justify-content: space-between;
+        align-items: center;
+        width: -webkit-fill-available;
+
+    }
+
+    .detalle_libro_detalles_informacion_descripcion{
+        
+        font-size: 16px;
+        text-align: justify;
+
+    }
+
+    .detalle_libro_detalles_informacion_otros{
+        
+        gap:10px;
+        
+    }
+
+    .detalle_libro_close_tag {
+
+        position: absolute; 
+        top:0px; 
+        right: 40px; 
+        height: 80px; 
+        width: 60px; 
+        border-style: solid; 
+        z-index: 101; 
+        background-color: red; 
+        display: flex; 
+        align-items: end; 
+        justify-content: center;
+        padding-bottom: 20px;
+
+    }
+
+/*FORMULARIO DE LOGIN*/
+
+    .barra_formulario_login{
+        width: 30%;
+        height: 100vh;
+        background-color: white;
+        position: absolute;
+        right: 0px;
+        top:0px;
+        /* border-style: solid; */
+        color: black;
+        box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+        box-sizing: border-box;
+        z-index: 100;
+    }
+
+    .formulario_login_main{
+        gap:40px;
+    }
+
+    .formulario_login_card{
+        background-color: white;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+        padding: 50px;
+        gap: 50px;
+        border-radius: 10px;
+        margin: 20px;
+        border-style: solid;
+        border-width: 1px;
+        border-color: rgba(0,0,0,0.16);
+        
+
+    }
+
+    .login_button{
+        height: 50px;
+        min-width: 200px;
+        border-radius: 10px;
+        border-style: none;
+        color: white;
+        background-color: #616161;
+
+    }
+
+    .login_button:hover{
+        background-color: #616161a1;
+    }
+
+    .login_button_logout{
+        background-color: #3c4a99;
+        height: 100px;
+        border-radius: 0px;
+        justify-self: flex-end;
+       
+    }
+
+    .login_opciones_close{
+        height: 10vh;
+        color: white;
+        background-color: #616161;
+        justify-content: end;
+        align-items: center;
+        padding:0px 20px;
+        gap:20px;
+
+    }
+
+    .login_msg {
+        background-color: red;
+        color: white;
+        justify-content: center;
+        align-items: center;
+        height: 40px;
+        width: -webkit-fill-available;
+        font-weight: bold;
+
+    }
+
+    
+
