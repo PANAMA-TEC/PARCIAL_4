@@ -1,7 +1,10 @@
 const boton_formulario = document.getElementById('btn_login_formulario');
 const contenedor_libro = document.getElementById('contenedor_libros');
 const google_login = document.getElementById('google_login');
+
 const close_login = document.getElementById('close_login');
+const open_login = document.getElementById('open_login');
+
 const formulario_login_card = document.getElementById('formulario_login_card');
 const login = document.getElementById('login')
 
@@ -32,6 +35,17 @@ const validar_existencia_clase = (elemento, clase) => {
     return Array.from(elemento.classList).includes(clase)
 }
 
+const toogle_login = () => {
+    login.classList.add("open");
+    
+    if (validar_existencia_clase(login, "open")){
+        login.classList.add("close");
+
+    }else{
+        login.classList.add("open");
+    }
+}
+
 boton_formulario.addEventListener("click", (event) => {
     alert("presionado")
 });
@@ -41,7 +55,15 @@ google_login.addEventListener("click", () => {
 })
 
 close_login.addEventListener("click", ()=>{
-    login.classList.add("open");
+    
+   toogle_login();
+
+})
+
+open_login.addEventListener("click", ()=>{
+    
+   toogle_login();
+
 })
 
 console.log((Array.from(formulario_login_card.classList).includes('close')))
