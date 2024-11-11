@@ -1,6 +1,6 @@
 <?php
     session_start();
-    include "D:\laragon\www\PARCIALES\PARCIAL_4\keys.php";
+    include "../../../keys.php";
 
     if (isset($_GET['code'])) {
         // Datos de la aplicación de Google

@@ -1,6 +1,6 @@
 <?php
     // Datos de la aplicación de Google
-    include "D:\laragon\www\PARCIALES\PARCIAL_4\keys.php";
+    include "../../../keys.php";
 
     $redirect_uri = 'http://localhost/PARCIALES/PARCIAL_4/assets/php/GoogleOAuth/callback.php'; // Redirecciona a callback.php
     $scope = 'https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile';

@@ -11,9 +11,6 @@
 
   // URL de la API para obtener la información del usuario
   
-
-  
-
 ?>
 
 
@@ -156,7 +153,7 @@
     <?php if (!isset($_SESSION['access_token'])): ?>
       <div class="col formulario_login_card">
     <?php else: ?>
-      <div class="col formulario_login_card" style="display: none;"> <?php endif; ?>
+      <div id="formulario_login_card" class="col formulario_login_card close" > <?php endif; ?>
         <label class="font_tittles"> Login de usuarios</label>
         <form class="col formulario_login_main" method="post" action="./assets/php/login.php">
           

@@ -2,6 +2,8 @@ const boton_formulario = document.getElementById('btn_login_formulario');
 const contenedor_libro = document.getElementById('contenedor_libros');
 const google_login = document.getElementById('google_login');
 const close_login = document.getElementById('close_login');
+const formulario_login_card = document.getElementById('formulario_login_card');
+const login = document.getElementById('login')
 
 const cantidad_libros = 50;
 
@@ -26,6 +28,10 @@ const libros = () => {
     `;
 } 
 
+const validar_existencia_clase = (elemento, clase) => {
+    return Array.from(elemento.classList).includes(clase)
+}
+
 boton_formulario.addEventListener("click", (event) => {
     alert("presionado")
 });
@@ -35,8 +41,11 @@ google_login.addEventListener("click", () => {
 })
 
 close_login.addEventListener("click", ()=>{
-    alert('cerrando_barra');
+    login.classList.add("open");
 })
+
+console.log((Array.from(formulario_login_card.classList).includes('close')))
+
 
 const redirigir = (mylink) => {
     // Redirigir a la página deseada
