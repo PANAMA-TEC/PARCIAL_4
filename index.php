@@ -8,13 +8,17 @@
   if (isset($_SESSION['access_token'])) {
     echo "<div class='row login_msg'>Session Iniciada con Exito</div>";
     print_r(get_user_information($_SESSION['access_token']));
+    $user_information = get_user_information($_SESSION['access_token']);
   }
 
+<<<<<<< HEAD
   $user_information = get_user_information($_SESSION['access_token'])
   // Token de acceso
 
   // URL de la API para obtener la información del usuario
   
+=======
+>>>>>>> 84d85e26270383417ef35db31effef4a178883e0
 ?>
 
 

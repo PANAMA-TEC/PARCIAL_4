@@ -64,6 +64,7 @@
         align-items: center;
         overflow-y: auto;
         height: 60vh;
+        margin-top: 10px;
     }
 
     .contenedor_libros::-webkit-scrollbar {
