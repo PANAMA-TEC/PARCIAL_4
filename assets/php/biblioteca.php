@@ -1,6 +1,6 @@
 <?php
 
-    include "D:\laragon\www\PARCIALES\PARCIAL_4\keys.php";
+    include "..\..\..\keys.php";
     
 
     class Biblioteca {
