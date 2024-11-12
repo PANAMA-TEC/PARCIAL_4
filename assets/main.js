@@ -78,7 +78,7 @@ const toggle_detalle = (id) => {
         let autor = book_details.volumeInfo.authors[0];
         let ano_publicacion = book_details.volumeInfo.publishedDate;
 
-        detalle_libro.innerHTML = mostrar_detalles_libros(titulo_libro, descripcion,imagen, autor, ano_publicacion);
+        detalle_libro.innerHTML = mostrar_detalles_libros(titulo_libro, descripcion,imagen, autor, ano_publicacion, my_book_id);
     }
 
     toggle_element(detalle_libro);
@@ -106,23 +106,34 @@ const listar_libros = () => {
     return HTML;
 }
 
-const guardar_favorito = (user_id, google_b_id, titulo, autor, imagen_portada_, resena_personal_, descripcion_libro_ ) => {
+const agregar_favorito = (id) => {
     
     let api = 'http://localhost/PARCIALES/PARCIAL_4/assets/php/guardar_favoritos.php';
+
+    if (id){
+
+        detalle_libro.innerHTML = "";
     
-    const user_id = '1'; // Puedes obtener este valor de algún input o variable
-    const google_books_id = google_b_id; // Similar al valor que se debe pasar
-    const titulo = titulo;
-    const autor = autor;
-    const imagen_portada = imagen_portada_;
-    const resena_personal = resena_personal_;
-    const descripcion_libro = descripcion_libro_;
+        const my_book_id = id.replace("agregar_favorito_", "");
+        const book_details = arreglo_libros[my_book_id];
 
-    // Construye la URL con los parámetros GET
-    const URL = `${api}?user_id=${encodeURIComponent(user_id)}&google_books_id=${encodeURIComponent(google_books_id)}&titulo=${encodeURIComponent(titulo)}&autor=${encodeURIComponent(autor)}&imagen_portada=${encodeURIComponent(imagen_portada)}&resena_personal=${encodeURIComponent(resena_personal)}&descripcion_libro=${encodeURIComponent(descripcion_libro)}`;
+        const user_id = '1'; 
+        const google_books_id = book_details.id;
+        const titulo = book_details.volumeInfo.title;
+        const autor = book_details.volumeInfo.authors[0];
+        const imagen_portada = book_details.volumeInfo.imageLinks.thumbnail;
+        const resena_personal = "sin resena personal";
+        const descripcion_libro = book_details.volumeInfo.description;
 
-    // Realiza el request con la URL
-    request(URL);
+        
+        const URL = `${api}?user_id=${encodeURIComponent(user_id)}&google_books_id=${encodeURIComponent(google_books_id)}&titulo=${encodeURIComponent(titulo)}&autor=${encodeURIComponent(autor)}&imagen_portada=${encodeURIComponent(imagen_portada)}&resena_personal=${encodeURIComponent(resena_personal)}&descripcion_libro=${encodeURIComponent(descripcion_libro)}`;
+        request(URL);
+        toggle_detalle();
+        
+    }else {
+        alert('error_detectado');
+    }
+    
 }
 
 
@@ -180,7 +191,7 @@ setTimeout(() => {
 window.toggle_detalle = toggle_detalle;
 window.arreglo_libros = arreglo_libros;
 window.redirigir = redirigir;
-window.guardar_favorito = guardar_favorito;
+window.agregar_favorito = agregar_favorito;
 
 
 
