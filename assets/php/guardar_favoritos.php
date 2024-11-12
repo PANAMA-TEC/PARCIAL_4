@@ -1,24 +1,26 @@
 <?php
 
-require_once '.\assets\php\biblioteca.php';
+    require_once '.\assets\php\biblioteca.php';
 
-//conexion a la base de datos
-//include 'conexion.php';
+    //conexion a la base de datos
+    //include 'conexion.php';
 
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Aquí procesamos los datos enviados por el formulario
-    if (isset($_POST['user_id']) && isset($_POST['google_books_id']) && isset($_POST['titulo']) && isset($_POST['autor']) && isset($_POST['imagen_portada']) && isset($_POST['resena_personal']) && isset($_POST['descripcion_libro'])) {
-        // Acceder a los datos enviados por POST
-        $user_id = $_POST['user_id'];
-        $google_books_id = $_POST['google_books_id'];
-        $titulo = $_POST['titulo'];
-        $autor = $_POST['autor'];
-        $imagen_portada = $_POST['imagen_portada'];
-        $resena_personal = $_POST['resena_personal'];
-        $descripcion_libro = $_POST['descripcion_libro'];
+    if ($_SERVER['REQUEST_METHOD'] == 'GET') {
+        // Aquí procesamos los datos enviados por el formulario
+        if (isset($_GET['user_id']) && isset($_GET['google_books_id']) && isset($_GET['titulo']) && isset($_GET['autor']) && isset($_GET['imagen_portada']) && isset($_GET['resena_personal']) && isset($_GET['descripcion_libro'])) {
+            // Acceder a los datos enviados por GET
+            $user_id = $_GET['user_id'];
+            $google_books_id = $_GET['google_books_id'];
+            $titulo = $_GET['titulo'];
+            $autor = $_GET['autor'];
+            $imagen_portada = $_GET['imagen_portada'];
+            $resena_personal = $_GET['resena_personal'];
+            $descripcion_libro = $_GET['descripcion_libro'];
+        }else{
+            echo 'error en la consulta';
+        }
     }
-}
     // Crear una instancia de la clase que contiene la función guardarLibroFavorito
     $libro = new LibroFavorito($conexion);
 
