@@ -134,9 +134,23 @@ const agregar_favorito = (titulo_libro, descripcion,imagen, autor, ano_publicaci
     
 }
 
-const eliminar_favoritos = (book_id) => {
-    alert(book_id)
-}
+// const eliminar_favoritos = (book_id) => {
+//     let api = 'http://localhost/PARCIALES/PARCIAL_4/assets/php/guardar_favoritos.php';
+
+//     if (book_id){
+
+//         detalle_libro.innerHTML = "";
+            
+//         const URL = `${api}?google_books_id=${encodeURIComponent(book_id)}`;
+//         request(URL);
+//         alert('Libro eliminado a la base de datos.');
+//         toggle_detalle();
+        
+//     }else {
+//         alert('error_detectado');
+//     }
+
+// }
 
 boton_formulario.addEventListener("click", (event) => {
     alert("presionado")
