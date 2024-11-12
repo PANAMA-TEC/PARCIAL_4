@@ -1,5 +1,5 @@
 <?php
-echo "<pre>";
+
 require_once('biblioteca.php');  // Asegúrate de que este archivo existe y está bien incluido
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         // Acceder a los parámetros pasados por la URL (GET)
         $nombre = $_GET['nombre'];
         $email = $_GET['email'];
-        $google_id = $_GET['google_id'];
+        
 
         // Crear la conexión a la base de datos (puedes moverla a la clase si prefieres)
         $conexion = new mysqli("localhost", "root", "pty96", "biblioteca_personal");
@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         $biblioteca = new Biblioteca($conexion);  // Asegúrate de pasar la conexión al constructor de la clase
 
         // Llamar al método para guardar el usuario
-        $mensaje = $biblioteca->guardarUsuario($nombre, $email, $google_id);
+        $mensaje = $biblioteca->guardarUsuario($nombre, $email);
 
         // Mostrar el mensaje que devuelve la función
         echo $mensaje;

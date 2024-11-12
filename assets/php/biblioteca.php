@@ -68,11 +68,10 @@
             }
         }
         // Función para guardar el usuario 
-        public function guardarUsuario($nombre, $email, $google_id) {
+        public function guardarUsuario($nombre, $email, $user_id) {
             // Verificar si el usuario ya existe
             $query = "SELECT id FROM usuarios WHERE email = ?";
             $stmt = $this->conexion->prepare($query);
-            $stmt->bind_param("s", $email);
             $stmt->execute();
             $stmt->store_result();
 
@@ -81,9 +80,9 @@
             }
 
             // Insertar el usuario
-            $query = "INSERT INTO usuarios (nombre, email, google_id) VALUES (?, ?, ?)";
+            $query = "INSERT INTO usuarios (nombre, email, user_id) VALUES (?, ?, ?)";
             $stmt = $this->conexion->prepare($query);
-            $stmt->bind_param("sss", $nombre, $email, $google_id);
+            $stmt->bind_param("sss", $nombre, $email, $user_id);
 
             if ($stmt->execute()) {
                 return "Usuario registrado con éxito.";
