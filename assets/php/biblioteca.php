@@ -116,5 +116,5 @@
     echo $biblioteca->borrarLibroFavorito(1, "12345");
 
     // Cerrar la conexión
-    $conexion->close();
+   // $conexion->close();
 ?>
