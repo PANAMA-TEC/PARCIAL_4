@@ -1,7 +1,7 @@
 <?php
 
-echo "<pre>";
-require_once('biblioteca.php');
+$conexion = new mysqli("localhost", "root", "", "biblioteca_personal");
+require_once('./biblioteca.php');
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     // Verificar si el user_id está presente en la URL
@@ -17,16 +17,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
         // Verificar si se encontraron libros guardados
         if (count($libros_guardados) > 0) {
-            echo "<h2>Libros guardados para el usuario $user_id:</h2><ul>";
+            $json = [];
+            
             foreach ($libros_guardados as $libro) {
-                echo "<li>";
-                echo "<strong>Título:</strong> " . htmlspecialchars($libro['titulo']) . "<br>";
-                echo "<strong>Autor:</strong> " . htmlspecialchars($libro['autor']) . "<br>";
-                echo "<strong>Imagen de portada:</strong> <img src='" . htmlspecialchars($libro['imagen_portada']) . "' alt='Portada' style='width:100px;height:auto;'><br>";
-                echo "<strong>Reseña personal:</strong> " . htmlspecialchars($libro['resena_personal']) . "<br><br>";
-                echo "</li>";
+                // Agrega cada libro al array JSON
+                $json[] = [
+                    'titulo' => htmlspecialchars($libro['titulo']),
+                    'autor' => htmlspecialchars($libro['autor']),
+                    'imagen_portada' => htmlspecialchars($libro['imagen_portada']),
+                    'resena_personal' => htmlspecialchars($libro['resena_personal']),
+                    'google_book_id' => htmlspecialchars($libro['google_books_id']),
+                    'descripcion_libro' => htmlspecialchars($libro['descripcion_libro']),
+
+                ];
             }
-            echo "</ul>";
+            
+            echo json_encode($json);
         } else {
             echo "No se encontraron libros guardados para el usuario $user_id.";
         }
