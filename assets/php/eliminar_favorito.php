@@ -1,29 +1,34 @@
 <?php
 
-require_once '.\assets\php\biblioteca.php';
+echo "<pre>";
 
-//conexion a la base de datos
-include 'conexion.php';
+require_once './biblioteca.php'; // Ajusta la ruta según la ubicación de biblioteca.php
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-    // Verificar si se pasaron los parámetros 'user_id' y 'google_books_id' en la URL
     if (isset($_GET['user_id']) && isset($_GET['google_books_id'])) {
-        // Acceder a los parámetros pasados por la URL (GET)
         $user_id = $_GET['user_id'];
         $google_books_id = $_GET['google_books_id'];
 
-        // Llamar al método borrarLibroFavorito
-        $mensaje = $this->borrarLibroFavorito($user_id, $google_books_id);
+        // Crear la conexión a la base de datos (puedes moverla a la clase si prefieres)
+        $conexion = new mysqli("localhost", "root", "pty96", "biblioteca_personal");
+        if ($conexion->connect_error) {
+            die("Conexión fallida: " . $conexion->connect_error);
+        }
+
+        // Crear instancia de la clase Biblioteca y pasarle la conexión
+        $biblioteca = new Biblioteca($conexion);
+
+        // Llamar al método para borrar el libro
+        $mensaje = $biblioteca->borrarLibroFavorito($user_id, $google_books_id);
 
         // Mostrar el mensaje que devuelve la función
-    echo $mensaje;
+        echo $mensaje;
 
-    // } else {
-    //     echo "Faltan parámetros: user_id o google_books_id.";
-    // }
-    // } else {
-    //         echo "Este script solo procesa solicitudes GET.";
+        // Cerrar la conexión después de completar la operación
+        $conexion->close();
+    } else {
+        echo "Faltan parámetros: user_id o google_books_id.";
     }
+} else {
+    echo "Este script solo procesa solicitudes GET.";
 }
-
-?>

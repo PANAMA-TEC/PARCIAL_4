@@ -110,7 +110,6 @@
 
     // Ejemplo de listar los libros guardados
     $libros = $biblioteca->listarLibrosGuardados(1);
-    //$libros = $biblioteca->listarLibrosGuardados(2);
     print_r($libros);
 
     // Ejemplo de borrar un libro de los favoritos
