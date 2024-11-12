@@ -101,6 +101,7 @@ open_login.addEventListener("click", ()=>{
 
 window.toggle_detalle = toggle_detalle;
 window.arreglo_libros = arreglo_libros;
+window.redirigir = redirigir;
 
 const prepara_contenido = () => {
     let HTML = "";
