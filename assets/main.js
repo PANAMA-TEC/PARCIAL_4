@@ -12,6 +12,9 @@ const open_login = document.getElementById('open_login');
 const formulario_login_card = document.getElementById('formulario_login_card');
 const login = document.getElementById('login');
 const detalle_libro = document.getElementById('detalle_libro');
+const boton_buscador = document.getElementById('boton_buscador');
+const texto_buscado = document.getElementById('libro_buscado');
+
 
 const GOOGLE_BOOK_URL = 'http://localhost/PARCIALES/PARCIAL_4/assets/php/GoogleBooks/google_book.php';
 
@@ -100,6 +103,25 @@ open_login.addEventListener("click", ()=>{
     
     toggle_login();
 
+})
+
+boton_buscador.addEventListener('click', async () => {
+    
+    if (texto_buscado.value){
+        
+        let termino_busqueda = texto_buscado.value; 
+        libros_disponibles = await request(`${GOOGLE_BOOK_URL}?cantidad_libros=${cantidad_libros}&libro_buscado=${termino_busqueda}`);
+        arreglo_libros = libros_disponibles.items;
+
+        contenedor_libro.innerHTML = "";
+        contenedor_libro.innerHTML = listar_libros();
+        
+
+    }else{
+        alert(texto_buscado.value)
+        alert('not posible');
+    }
+    
 })
 
 window.toggle_detalle = toggle_detalle;
