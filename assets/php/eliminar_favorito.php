@@ -1,5 +1,10 @@
 <?php
 
+require_once '.\assets\php\biblioteca.php';
+
+//conexion a la base de datos
+include 'conexion.php';
+
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     // Verificar si se pasaron los parámetros 'user_id' y 'google_books_id' en la URL
     if (isset($_GET['user_id']) && isset($_GET['google_books_id'])) {
