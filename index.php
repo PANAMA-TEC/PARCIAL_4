@@ -1,6 +1,6 @@
 <?php 
 
-  // require_once '.\assets\php\biblioteca.php';
+  require_once '.\assets\php\biblioteca.php';
 
   include_once '.\assets\php\GoogleOAuth\get_user_information.php';
   
@@ -10,7 +10,33 @@
     echo "<div class='row login_msg'>SESSION INICIADA</div>";
     // print_r(get_user_information($_SESSION['access_token']));
     $user_information = get_user_information($_SESSION['access_token']);
+
+    
+
+    $conexion = new mysqli("localhost", "root", "", "biblioteca_personal");
+    $biblioteca = new Biblioteca($conexion);
+    
+    $usuario_existente = $biblioteca->validar_existencia_usuario($user_information['id']);
+    
+    if( $usuario_existente ){
+        // print_r($usuario_existente);
+        $_SESSION['array_id'] = $usuario_existente[0]['id'];
+    }else{
+      //guardarUsuario($nombre, $email, $google_id) {
+        $validador = $biblioteca->guardarUsuario($user_information['name'], $user_information['email'], $user_information['id']);
+
+        if($validador){
+           $_SESSION['array_id'] = $usuario_existente['id'];           
+        }
+
+        
+        
+    }
   }
+
+  // if (isset($_SESSION['array_id'])){
+  //   echo $_SESSION['array_id'];
+  // }
 
 ?>
 
