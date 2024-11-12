@@ -63,7 +63,7 @@
         justify-content: start;
         align-items: center;
         overflow-y: auto;
-        height: 60vh;
+        height: 55vh;
         margin-top: 10px;
     }
 
@@ -172,7 +172,7 @@
 
   .buscador>input{
     width: 90%; 
-    padding:15px 50px;
+    padding:5px 50px;
     height: -webkit-fill-available;
     border-radius: 50px;
     font-size: 20px;
@@ -282,7 +282,8 @@
         font-size: 22px;
         justify-content: space-between;
         align-items: center;
-        width: -webkit-fill-available;
+        width: 70%;
+        
 
     }
 
@@ -290,6 +291,14 @@
         
         font-size: 16px;
         text-align: justify;
+        height: 400px;
+        overflow: scroll;
+        overflow-x: hidden;
+
+    }
+
+    .detalle_libro_detalles_informacion_descripcion::-webkit-scrollbar{
+        display: none;
 
     }
 
