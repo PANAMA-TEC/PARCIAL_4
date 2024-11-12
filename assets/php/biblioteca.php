@@ -1,6 +1,7 @@
 <?php
 
-    include "..\..\..\keys.php";
+    include "D:\laragon\www\PARCIALES\PARCIAL_4\keys.php";
+
     
 
     class Biblioteca {
@@ -39,7 +40,7 @@
 
         // Función para listar los libros guardados
         public function listarLibrosGuardados($user_id) {
-            $query = "SELECT google_books_id, titulo, autor, imagen_portada, resena_personal, fecha_guardado, descripion_libro
+            $query = "SELECT google_books_id, titulo, autor, imagen_portada, resena_personal, fecha_guardado, descripcion_libro
                     FROM libros_guardados WHERE user_id = ?";
             $stmt = $this->conexion->prepare($query);
             $stmt->bind_param("i", $user_id);
