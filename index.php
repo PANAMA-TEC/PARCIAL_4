@@ -1,4 +1,7 @@
 <?php 
+
+  require_once 'assets/php/Clases/biblioteca.php';
+
   include_once '.\assets\php\GoogleOAuth\get_user_information.php';
   session_start();  
   
