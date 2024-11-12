@@ -181,7 +181,9 @@
 /*LIBROS*/
 
     .libro{
-        position: relative;  height: 220px; width: 160px; 
+        position: relative;  
+        height: 220px; 
+        width: 160px; 
         cursor: pointer;
     }
 
@@ -202,6 +204,23 @@
         position: absolute;  border-radius: 10px;  height: 100%; width: 95%; z-index: 3; 
         background-color: green; 
         box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    }
+
+    .libro_titulo{
+        margin-top: 10px;
+        color: black;
+        font-weight: bold;
+
+    }
+
+    .libro_autor{
+     
+        color: black;
+
+    }
+
+    .libro_contenedor_general{
+        width: 160px; 
     }
 
 /*DETALLE LIBRO */
