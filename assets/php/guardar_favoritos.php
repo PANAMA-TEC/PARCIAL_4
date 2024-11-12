@@ -38,7 +38,7 @@
         }
 
     }else{
-        echo "{'mensaje':'error al actualizar'}";
+        echo '{"mensaje":"error al actualizar"}';
     }
     
 

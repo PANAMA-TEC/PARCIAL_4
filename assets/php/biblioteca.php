@@ -41,8 +41,7 @@
 
         // Función para listar los libros guardados
         public function listarLibrosGuardados($user_id) {
-            $query = "SELECT google_books_id, titulo, autor, imagen_portada, resena_personal, fecha_guardado, descripcion_libro
-                    FROM libros_guardados WHERE user_id = ?";
+            $query =    "SELECT google_books_id, titulo, autor, imagen_portada, resena_personal, fecha_guardado, descripcion_libro FROM libros_guardados WHERE user_id = ?";
             $stmt = $this->conexion->prepare($query);
             $stmt->bind_param("i", $user_id);
             $stmt->execute();
