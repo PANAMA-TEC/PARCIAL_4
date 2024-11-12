@@ -13,7 +13,7 @@ const detalle_libro = document.getElementById('detalle_libro');
 
 const cantidad_libros = 50;
 
-import { saludar } from "./modules/pruebas/index.js";
+import { toggle_element, redirigir } from "./modules/funcionesGenerales/index.js";
 
 const libros = () => {
     return `
@@ -36,21 +36,6 @@ const libros = () => {
     `;
 } 
 
-const validar_existencia_clase = (elemento, clase) => {
-    return Array.from(elemento.classList).includes(clase);
-}
-
-const toggle_element = (toToggle) => {
-    if (validar_existencia_clase(toToggle, "open")){
-        toToggle.classList.add("close");
-        toToggle.classList.remove('open');
-
-    }else{
-        
-        toToggle.classList.add("open");
-        toToggle.classList.remove('close');
-    }
-}
 
 const toggle_login = () => {
     
@@ -88,15 +73,12 @@ open_login.addEventListener("click", ()=>{
 
 })
 
-const redirigir = (mylink) => {
-    // Redirigir a la página deseada
-    window.location.href = mylink;
-}
+
 
 setTimeout( ()=>{
     contenedor_libro.innerHTML = "";
 
-    saludar();
+  
 
     for (let index = 0; index < cantidad_libros; index++) {
         contenedor_libro.innerHTML += libros()
