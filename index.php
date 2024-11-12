@@ -3,8 +3,8 @@
   session_start();  
   
   if (isset($_SESSION['access_token'])) {
-    echo "<div class='row login_msg'>Session Iniciada con Exito</div>";
-    print_r(get_user_information($_SESSION['access_token']));
+    echo "<div class='row login_msg'>SESSION INICIADA</div>";
+    //print_r(get_user_information($_SESSION['access_token']));
     $user_information = get_user_information($_SESSION['access_token']);
   }
 
@@ -185,7 +185,7 @@
 
   </div>
 
-  <script type="text/javascript" src="./assets/main.js"></script>
+  <script type="module" src="./assets/main.js"></script>
 
 </body>
 

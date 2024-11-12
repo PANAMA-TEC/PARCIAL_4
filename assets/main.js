@@ -13,6 +13,8 @@ const detalle_libro = document.getElementById('detalle_libro');
 
 const cantidad_libros = 50;
 
+import { saludar } from "./modules/pruebas/index.js";
+
 const libros = () => {
     return `
         <div class='libro' >   
@@ -86,9 +88,6 @@ open_login.addEventListener("click", ()=>{
 
 })
 
-
-
-
 const redirigir = (mylink) => {
     // Redirigir a la página deseada
     window.location.href = mylink;
@@ -96,6 +95,8 @@ const redirigir = (mylink) => {
 
 setTimeout( ()=>{
     contenedor_libro.innerHTML = "";
+
+    saludar();
 
     for (let index = 0; index < cantidad_libros; index++) {
         contenedor_libro.innerHTML += libros()
