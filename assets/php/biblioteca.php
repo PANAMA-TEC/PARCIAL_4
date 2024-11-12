@@ -64,7 +64,7 @@ class Biblioteca {
     }
 }
 // Crear la conexión a la base de datos
-$conexion = new mysqli("localhost", "usuario", "contraseña", "nombre_de_la_base_de_datos");
+$conexion = new mysqli("localhost", "root", "pty96", "biblioteca_personal");
 
 // Verificar si la conexión es exitosa
 if ($conexion->connect_error) {

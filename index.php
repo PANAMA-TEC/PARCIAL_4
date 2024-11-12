@@ -1,6 +1,6 @@
 <?php 
 
-  require_once 'assets/php/Clases/biblioteca.php';
+  require_once '.\assets\php\biblioteca.php';
 
   include_once '.\assets\php\GoogleOAuth\get_user_information.php';
   session_start();  
@@ -10,6 +10,7 @@
     print_r(get_user_information($_SESSION['access_token']));
   }
 
+  $user_information = get_user_information($_SESSION['access_token'])
   // Token de acceso
 
   // URL de la API para obtener la información del usuario
@@ -87,7 +88,7 @@
 
   </div>
 
-  <div id="detalle_libro" class="detalle_libro" style="display:none">
+  <div id="detalle_libro" class="close detalle_libro row">
 
     <div class="detalle_libro_contenedor row">
 
@@ -130,7 +131,7 @@
 
         </div>
 
-        <div class="detalle_libro_close_tag">
+        <div id='close_detalle' class="detalle_libro_close_tag">
           <svg class="clickeable" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="white" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
                 <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z" />
           </svg>
@@ -142,7 +143,7 @@
 
   </div>
 
-  <div id="login" class="barra_formulario_login col close" style="">
+  <div id="login" class="barra_formulario_login col close" >
     
     <div  class="login_opciones_close row">
       Cerrar
@@ -152,40 +153,42 @@
 
     </div>
     
-
-    <?php if (!isset($_SESSION['access_token'])): ?>
-      <div class="col formulario_login_card">
-    <?php else: ?>
-      <div id="formulario_login_card" class="col formulario_login_card" > <?php endif; ?>
-        <label class="font_tittles"> Login de usuarios</label>
-        <form class="col formulario_login_main" method="post" action="./assets/php/login.php">
-          
-          <div class="col">
-            <label class="font_form_tittles">Usuario:</label>
-            <input type="text" name="usuario" style="height: 30px;">
-          </div>
-
-          <div class="col">
-            <label class="font_form_tittles">Contrasena: </label>
-            <input type="password" name="contrasena" style="height: 30px;">
-          </div>
-          
-          <svg id="google_login" class='clickeable' xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-google" viewBox="0 0 16 16">
-            <path d="M15.545 6.558a9.4 9.4 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.7 7.7 0 0 1 5.352 2.082l-2.284 2.284A4.35 4.35 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.8 4.8 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.7 3.7 0 0 0 1.599-2.431H8v-3.08z"/>
-          </svg>
-     
-          <button id="btn_login_formulario" class="login_button">Iniciar Sesion</button>
-    
-        </form>
-      </div>
+    <div class="login_contenedor_inferior col">
+      <?php if (!isset($_SESSION['access_token'])): ?>
+        <div class="col formulario_login_card"'>
+      <?php else: ?>
+        <div id="formulario_login_card" class="col formulario_login_card" style='display:none;'> 
+      <?php endif; ?>
+          <label class="font_tittles"> Login de usuarios</label>
+          <form class="col formulario_login_main" method="post" action="./assets/php/login.php">
+            
+            <div class="col">
+              <label class="font_form_tittles">Usuario:</label>
+              <input type="text" name="usuario" style="height: 30px;">
+            </div>
   
-    <?php if (isset($_SESSION['access_token'])): ?>
+            <div class="col">
+              <label class="font_form_tittles">Contrasena: </label>
+              <input type="password" name="contrasena" style="height: 30px;">
+            </div>
+            
+            <svg id="google_login" class='clickeable' xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-google" viewBox="0 0 16 16">
+              <path d="M15.545 6.558a9.4 9.4 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.7 7.7 0 0 1 5.352 2.082l-2.284 2.284A4.35 4.35 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.8 4.8 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.7 3.7 0 0 0 1.599-2.431H8v-3.08z"/>
+            </svg>
+       
+            <button id="btn_login_formulario" class="login_button">Iniciar Sesion</button>
+      
+          </form>
+        </div>
     
+      <?php if (isset($_SESSION['access_token'])): ?>
+        
+        <div class="login_image" style=" background-image: url('<?php echo $user_information['picture']; ?>'); "></div>
+        <button id="logout" class='login_button login_button_logout clickeable' onclick="redirigir('http://localhost/PARCIALES/PARCIAL_4/assets/php/logout.php')"> CERRAR SESSION </button>
     
-    <button id="logout" class='login_button login_button_logout' onclick="redirigir('http://localhost/PARCIALES/PARCIAL_4/assets/php/logout.php')"> CERRAR SESSION </button>
+      <?php endif; ?>
 
-    
-    <?php endif; ?>
+    </div>
 
   </div>
 
