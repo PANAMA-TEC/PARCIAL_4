@@ -1,6 +1,6 @@
 <?php
     
-    require_once '../libraries/google-api-php-client/src/Google/autoload.php';';
+    require_once '../libraries/google-api-php-client/src/Google/autoload.php';
 
     $login_server = [
         "usuario_1" => ["gabrielP","Profesor","123456"],

@@ -32,18 +32,17 @@ const libros = () => {
 } 
 
 const validar_existencia_clase = (elemento, clase) => {
-    return Array.from(elemento.classList).includes(clase)
+    return Array.from(elemento.classList).includes(clase);
 }
 
 const toogle_login = () => {
-    
-    
     
     if (validar_existencia_clase(login, "open")){
         login.classList.add("close");
         login.classList.remove('open');
 
     }else{
+        
         login.classList.add("open");
         login.classList.remove('close');
     }
@@ -64,12 +63,12 @@ close_login.addEventListener("click", ()=>{
 })
 
 open_login.addEventListener("click", ()=>{
-    alert("abriendo");
+    
     toogle_login();
 
 })
 
-console.log((Array.from(formulario_login_card.classList).includes('close')))
+
 
 
 const redirigir = (mylink) => {
