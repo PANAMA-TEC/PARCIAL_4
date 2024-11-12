@@ -11,14 +11,6 @@
     $user_information = get_user_information($_SESSION['access_token']);
   }
 
-<<<<<<< HEAD
-  $user_information = get_user_information($_SESSION['access_token'])
-  // Token de acceso
-
-  // URL de la API para obtener la información del usuario
-  
-=======
->>>>>>> 84d85e26270383417ef35db31effef4a178883e0
 ?>
 
 
