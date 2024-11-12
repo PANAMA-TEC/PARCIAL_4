@@ -25,6 +25,7 @@ var libros_disponibles = await request(`${GOOGLE_BOOK_URL}?cantidad_libros=${can
 
 var arreglo_libros = libros_disponibles.items;
 
+
 const libros = (imagen, titulo, id) => {
     
     return `
@@ -105,17 +106,17 @@ const listar_libros = () => {
     return HTML;
 }
 
-const guardar_favorito = () => {
+const guardar_favorito = (user_id, google_b_id, titulo, autor, imagen_portada_, resena_personal_, descripcion_libro_ ) => {
     
     let api = 'http://localhost/PARCIALES/PARCIAL_4/assets/php/guardar_favoritos.php';
     
-    const user_id = 'hola mundo'; // Puedes obtener este valor de algún input o variable
-    const google_books_id = '123456'; // Similar al valor que se debe pasar
-    const titulo = 'Mi libro';
-    const autor = 'Juan Pérez';
-    const imagen_portada = 'https://example.com/imagen.jpg';
-    const resena_personal = 'Una reseña muy interesante';
-    const descripcion_libro = 'Este libro trata sobre...';
+    const user_id = '1'; // Puedes obtener este valor de algún input o variable
+    const google_books_id = google_b_id; // Similar al valor que se debe pasar
+    const titulo = titulo;
+    const autor = autor;
+    const imagen_portada = imagen_portada_;
+    const resena_personal = resena_personal_;
+    const descripcion_libro = descripcion_libro_;
 
     // Construye la URL con los parámetros GET
     const URL = `${api}?user_id=${encodeURIComponent(user_id)}&google_books_id=${encodeURIComponent(google_books_id)}&titulo=${encodeURIComponent(titulo)}&autor=${encodeURIComponent(autor)}&imagen_portada=${encodeURIComponent(imagen_portada)}&resena_personal=${encodeURIComponent(resena_personal)}&descripcion_libro=${encodeURIComponent(descripcion_libro)}`;
@@ -165,6 +166,9 @@ boton_buscador.addEventListener('click', async () => {
     }
     
 })
+
+
+
 
 setTimeout(() => {
 
