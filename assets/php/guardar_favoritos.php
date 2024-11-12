@@ -3,7 +3,7 @@
 require_once '.\assets\php\biblioteca.php';
 
 //conexion a la base de datos
-include 'conexion.php';
+//include 'conexion.php';
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {

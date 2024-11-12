@@ -1,9 +1,7 @@
 <?php
 
-require_once '.\assets\php\biblioteca.php';
+require_once('biblioteca.php');
 
-//conexion a la base de datos
-include 'conexion.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     // Verificar si se pasaron los parámetros 'nombre' y 'email' en la URL
