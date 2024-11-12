@@ -11,34 +11,34 @@ class Biblioteca {
     }
 
     // Función para guardar un libro como favorito
-    public function guardarLibroFavorito($user_id, $google_books_id, $titulo, $autor, $imagen_portada, $resena_personal) {
+    public function guardarLibroFavorito($user_id, $google_books_id, $titulo, $autor, $imagen_portada, $resena_personal, $descripcion_libro) {
         // Verificar si el libro ya está guardado
         $query = "SELECT id FROM libros_guardados WHERE user_id = ? AND google_books_id = ?";
         $stmt = $this->conexion->prepare($query);
         $stmt->bind_param("is", $user_id, $google_books_id);
         $stmt->execute();
         $stmt->store_result();
-
+    
         if ($stmt->num_rows > 0) {
             return "El libro ya está en tus favoritos.";
         }
-
-        // Insertar nuevo libro
-        $query = "INSERT INTO libros_guardados (user_id, google_books_id, titulo, autor, imagen_portada, resena_personal, fecha_guardado) 
-                  VALUES (?, ?, ?, ?, ?, ?, NOW())";
+    
+        // Insertar nuevo libro con la descripción
+        $query = "INSERT INTO libros_guardados (user_id, google_books_id, titulo, autor, imagen_portada, resena_personal, descripcion_libro, fecha_guardado) 
+                  VALUES (?, ?, ?, ?, ?, ?, ?, NOW())";
         $stmt = $this->conexion->prepare($query);
-        $stmt->bind_param("isssss", $user_id, $google_books_id, $titulo, $autor, $imagen_portada, $resena_personal);
-
+        $stmt->bind_param("isssssb", $user_id, $google_books_id, $titulo, $autor, $imagen_portada, $resena_personal, $descripcion_libro);
+    
         if ($stmt->execute()) {
             return "Libro guardado como favorito.";
         } else {
             return "Error al guardar el libro: " . $this->conexion->error;
         }
-    }
+    }    
 
     // Función para listar los libros guardados
     public function listarLibrosGuardados($user_id) {
-        $query = "SELECT google_books_id, titulo, autor, imagen_portada, resena_personal, fecha_guardado 
+        $query = "SELECT google_books_id, titulo, autor, imagen_portada, resena_personal, fecha_guardado, descripion_libro
                   FROM libros_guardados WHERE user_id = ?";
         $stmt = $this->conexion->prepare($query);
         $stmt->bind_param("i", $user_id);
@@ -93,7 +93,7 @@ class Biblioteca {
 
 
 // Crear la conexión a la base de datos
-$conexion = new mysqli("localhost", "root", "pty96", "taller_8");
+$conexion = new mysqli("localhost", "root", "pty96", "biblioteca_personal");
 
 // Verificar si la conexión es exitosa
 if ($conexion->connect_error) {
@@ -104,7 +104,7 @@ if ($conexion->connect_error) {
 $biblioteca = new Biblioteca($conexion);
 
 // Ejemplo de guardar un libro como favorito
-echo $biblioteca->guardarLibroFavorito(1, "12345", "Título del libro", "Autor", "URL de la imagen", "Mi reseña");
+echo $biblioteca->guardarLibroFavorito(1, "12345", "Título del libro", "Autor", "URL de la imagen", "Mi reseña", "descripcion_libro");
 
 // Ejemplo de listar los libros guardados
 $libros = $biblioteca->listarLibrosGuardados(1);
