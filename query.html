@@ -21,7 +21,7 @@ CREATE TABLE libros_guardados (
     titulo VARCHAR(255),
     autor VARCHAR(255),
     imagen_portada VARCHAR(255),
-    reseña_personal TEXT,
+    resena_personal TEXT,
     fecha_guardado TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES usuarios(id) ON DELETE CASCADE
 );

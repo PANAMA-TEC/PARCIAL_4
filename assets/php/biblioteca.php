@@ -1,4 +1,7 @@
 <?php
+
+include "../../../keys.php";
+
 class Biblioteca {
     private $conexion;
 
@@ -62,8 +65,8 @@ class Biblioteca {
             return "Error al eliminar el libro: " . $this->conexion->error;
         }
     }
-      // Función para guardar un nuevo usuario en la base de datos
-      public function guardarUsuario($nombre, $email, $password) {
+     // Función para guardar el usuario 
+    public function guardarUsuario($nombre, $email) {
         // Verificar si el usuario ya existe
         $query = "SELECT id FROM usuarios WHERE email = ?";
         $stmt = $this->conexion->prepare($query);
@@ -72,22 +75,22 @@ class Biblioteca {
         $stmt->store_result();
 
         if ($stmt->num_rows > 0) {
-            return "El usuario ya existe.";
+            return "El correo electrónico ya está registrado.";
         }
 
-        // Insertar nuevo usuario
-        $query = "INSERT INTO usuarios (nombre, email, password, fecha_registro) 
-                  VALUES (?, ?, ?, NOW())";
+        // Insertar el usuario
+        $query = "INSERT INTO usuarios (nombre, email) VALUES (?, ?)";
         $stmt = $this->conexion->prepare($query);
-        $stmt->bind_param("sss", $nombre, $email, $password);
+        $stmt->bind_param("ss", $nombre, $email);
 
         if ($stmt->execute()) {
-            return "Usuario guardado exitosamente.";
+            return "Usuario registrado con éxito.";
         } else {
-            return "Error al guardar el usuario: " . $this->conexion->error;
+            return "Error al registrar el usuario: " . $this->conexion->error;
         }
     }
-}
+ }
+
 
 // Crear la conexión a la base de datos
 $conexion = new mysqli("localhost", "root", "pty96", "taller_8");
