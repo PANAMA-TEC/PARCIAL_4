@@ -25,7 +25,6 @@ var libros_disponibles = await request(`${GOOGLE_BOOK_URL}?cantidad_libros=${can
 
 var arreglo_libros = libros_disponibles.items;
 
-
 const libros = (imagen, titulo, id) => {
     
     return `
@@ -78,12 +77,56 @@ const toggle_detalle = (id) => {
         let autor = book_details.volumeInfo.authors[0];
         let ano_publicacion = book_details.volumeInfo.publishedDate;
 
-        // console.log(imagen);
-    
         detalle_libro.innerHTML = mostrar_detalles_libros(titulo_libro, descripcion,imagen, autor, ano_publicacion);
     }
+
     toggle_element(detalle_libro);
 }
+
+const listar_libros = () => {
+
+    let HTML = "";
+    let id = 0;
+
+    arreglo_libros.forEach(element => {
+        
+        let imagen_libro = element.volumeInfo.imageLinks;
+        let titulo = element.volumeInfo.title
+
+        if(imagen_libro && titulo) {
+            // console.log(imagen_libro.thumbnail);
+            HTML += libros(imagen_libro.thumbnail, titulo, id);
+        }
+
+        id += 1;
+            
+    });
+
+    return HTML;
+}
+
+const guardar_favorito = () => {
+    
+    let api = 'http://localhost/PARCIALES/PARCIAL_4/assets/php/guardar_favoritos.php';
+    
+    const user_id = 'hola mundo'; // Puedes obtener este valor de algún input o variable
+    const google_books_id = '123456'; // Similar al valor que se debe pasar
+    const titulo = 'Mi libro';
+    const autor = 'Juan Pérez';
+    const imagen_portada = 'https://example.com/imagen.jpg';
+    const resena_personal = 'Una reseña muy interesante';
+    const descripcion_libro = 'Este libro trata sobre...';
+
+    // Construye la URL con los parámetros GET
+    const URL = `${api}?user_id=${encodeURIComponent(user_id)}&google_books_id=${encodeURIComponent(google_books_id)}&titulo=${encodeURIComponent(titulo)}&autor=${encodeURIComponent(autor)}&imagen_portada=${encodeURIComponent(imagen_portada)}&resena_personal=${encodeURIComponent(resena_personal)}&descripcion_libro=${encodeURIComponent(descripcion_libro)}`;
+
+    // Realiza el request con la URL
+    request(URL);
+}
+
+
+
+
 
 boton_formulario.addEventListener("click", (event) => {
     alert("presionado")
@@ -116,7 +159,6 @@ boton_buscador.addEventListener('click', async () => {
         contenedor_libro.innerHTML = "";
         contenedor_libro.innerHTML = listar_libros();
         
-
     }else{
         alert(texto_buscado.value)
         alert('not posible');
@@ -124,42 +166,17 @@ boton_buscador.addEventListener('click', async () => {
     
 })
 
-window.toggle_detalle = toggle_detalle;
-window.arreglo_libros = arreglo_libros;
-window.redirigir = redirigir;
-
-const listar_libros = () => {
-
-    let HTML = "";
-    let id = 0;
-
-    arreglo_libros.forEach(element => {
-        
-        let imagen_libro = element.volumeInfo.imageLinks;
-        let titulo = element.volumeInfo.title
-
-        if(imagen_libro && titulo) {
-            // console.log(imagen_libro.thumbnail);
-            HTML += libros(imagen_libro.thumbnail, titulo, id);
-        }
-
-        id += 1;
-            
-    });
-
-    return HTML;
-}
-
 setTimeout(() => {
 
-    contenedor_libro.innerHTML = ""
-    // console.log(arreglo_libros)
-    // console.log(prepara_contenido())
+    contenedor_libro.innerHTML = "";
     contenedor_libro.innerHTML = listar_libros();
     
 }, 2000);
 
-
+window.toggle_detalle = toggle_detalle;
+window.arreglo_libros = arreglo_libros;
+window.redirigir = redirigir;
+window.guardar_favorito = guardar_favorito;
 
 
 
