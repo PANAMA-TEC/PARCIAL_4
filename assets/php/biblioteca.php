@@ -55,10 +55,27 @@
             return $libros; // Devuelve un array con los libros guardados
         }
 
+        // Función para listar los libros guardados
+        public function validar_existencia_usuario($google_id) {
+            $query =    "SELECT id, email, nombre, google_id FROM usuarios WHERE google_id = ?";
+            $stmt = $this->conexion->prepare($query);
+            $stmt->bind_param("i", $google_id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+
+            $libros = [];
+            while ($row = $result->fetch_assoc()) {
+                $libros[] = $row;
+            }
+            
+            return $libros; // Devuelve un array con los libros guardados
+        }
+
         // Función para borrar un libro de los favoritos
         public function borrarLibroFavorito($user_id, $google_books_id) {
             $query = "DELETE FROM libros_guardados WHERE user_id = ? AND google_books_id = ?";
             $stmt = $this->conexion->prepare($query);
+            
             $stmt->bind_param("is", $user_id, $google_books_id);
 
             if ($stmt->execute()) {
@@ -85,12 +102,19 @@
             $stmt->bind_param("sss", $nombre, $email, $user_id);
 
             if ($stmt->execute()) {
-                return "Usuario registrado con éxito.";
+                return true;
             } else {
                 return "Error al registrar el usuario: " . $this->conexion->error;
             }
         }
     }
+
+   
+  
+
+
+
+
 
 
 
