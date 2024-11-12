@@ -1,5 +1,6 @@
 <?php
 
+
     require_once '.\assets\php\biblioteca.php';
 
     //conexion a la base de datos
@@ -24,10 +25,25 @@
     // Crear una instancia de la clase que contiene la función guardarLibroFavorito
     $libro = new LibroFavorito($conexion);
 
-    // Llamar a la función para guardar el libro en los favoritos
-    $resultado = $libro->guardarLibroFavorito($user_id, $google_books_id, $titulo, $autor, $imagen_portada, $resena_personal, $descripcion_libro);
 
-    // Mostrar el resultado
-    echo $resultado;
+        // Verificar que la conexión esté disponible
+        if (isset($conexion)) {
+            // Crear una instancia de la clase LibroFavorito
+            $libro = new LibroFavorito($conexion);
+
+            // Llamar a la función para guardar el libro en los favoritos
+            $resultado = $libro->guardarLibroFavorito($user_id, $google_books_id, $titulo, $autor, $imagen_portada, $resena_personal, $descripcion_libro);
+
+            // Mostrar el resultado
+            echo $resultado;
+        } else {
+            echo "Error en la conexión a la base de datos.";
+        }
+    } else {
+        echo "Faltan datos en el formulario.";
+    }
+} else {
+    echo "La solicitud no es POST.";
+}
 
 ?>
