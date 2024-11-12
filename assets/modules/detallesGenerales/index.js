@@ -1,7 +1,9 @@
-export const mostrar_detalles_libros = (titulo_libro, descripcion, imagen, autor, ano_publicacion, my_book_id, array_id) => {
+export const mostrar_detalles_libros = (titulo_libro, descripcion, imagen, autor, ano_publicacion, my_book_id, resena_personal) => {
+    
+    console.log('resena:' + resena_personal);
     
     descripcion = descripcion == 'undefined'? `Este libro, aunque aún no tiene una descripción detallada, guarda en sus páginas una historia única esperando ser descubierta. A veces, las mejores aventuras son aquellas que no se pueden resumir en unas pocas palabras. Te invitamos a abrir sus páginas y sumergirte en una narrativa que solo tú podrás experimentar. ¿Qué secretos esconde? Solo al leerlo podrás saberlo.` : descripcion;
-
+    resena_personal = resena_personal == 'undefined' ?  "Agrega un texto para tu resena" : resena_personal ;
     imagen = imagen ? imagen : "http://localhost/PARCIALES/PARCIAL_4/assets/images/test_portada.jpg";
 
     return `
@@ -32,16 +34,18 @@ export const mostrar_detalles_libros = (titulo_libro, descripcion, imagen, autor
 
                 </div>
 
+                <textarea id='text_area_detalle' text='' style=" padding:20px; margin-bottom: 20px; height: 200px; margin-top: 20px;">${resena_personal}</textarea>
+
                 <div class="detalle_libro_detalles_opciones row">
 
-                    <svg  id="eliminar_favorito_${array_id}" onclick="eliminar_favoritos('${my_book_id}')" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill=" clickeable currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
+                    <svg  id="eliminar_favorito_${my_book_id}" onclick="eliminar_favoritos('${my_book_id}')" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill=" clickeable currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
                     <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
                     </svg>
 
                     <label style="font-weight: bold;"> Eliminar de favoritos</label>
 
-                    <svg id='agregar_favorito_${array_id}' onclick="agregar_favorito('${titulo_libro}', '${descripcion}','${imagen}', '${autor}', '${ano_publicacion}', '${my_book_id}')" class="clickeable" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+                    <svg id='agregar_favorito_${my_book_id}' onclick="agregar_favorito('${titulo_libro}', '${descripcion}','${imagen}', '${autor}', '${ano_publicacion}', '${my_book_id}')" class="clickeable" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
                     class="bi bi-plus-circle" viewBox="0 0 16 16">
                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
                     <path
