@@ -3,11 +3,12 @@
   // require_once '.\assets\php\biblioteca.php';
 
   include_once '.\assets\php\GoogleOAuth\get_user_information.php';
+  
   session_start();  
   
   if (isset($_SESSION['access_token'])) {
     echo "<div class='row login_msg'>SESSION INICIADA</div>";
-    //print_r(get_user_information($_SESSION['access_token']));
+    // print_r(get_user_information($_SESSION['access_token']));
     $user_information = get_user_information($_SESSION['access_token']);
   }
 
