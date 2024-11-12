@@ -25,6 +25,7 @@ const libro_buscado = "harry";
 const urlParams = new URLSearchParams(window.location.search);
 var libros_disponibles = await request(`${GOOGLE_BOOK_URL}?cantidad_libros=${cantidad_libros}&libro_buscado=${libro_buscado}`);
 var arreglo_libros = libros_disponibles.items;
+var arreglo_libros_detalle = "";
 
 
 const libros = (imagen, titulo, id) => {
@@ -107,6 +108,15 @@ const listar_libros = () => {
     return HTML;
 }
 
+const obtener_libro = (titulo, imagen_libro, id) => {
+
+    if(imagen_libro && titulo) {
+        // console.log(imagen_libro.thumbnail);
+       return libros(imagen_libro, titulo, id);
+    }
+
+}
+
 const agregar_favorito = (id) => {
     
     let api = 'http://localhost/PARCIALES/PARCIAL_4/assets/php/guardar_favoritos.php';
@@ -138,7 +148,6 @@ const agregar_favorito = (id) => {
     }
     
 }
-
 
 boton_formulario.addEventListener("click", (event) => {
     alert("presionado")
@@ -177,9 +186,25 @@ boton_buscador.addEventListener('click', async () => {
     
 })
 
-setTimeout(() => {
+setTimeout(async () => {
     if (urlParams.get('opcion') == "ver_libros_favoritos" ){
+        
         contenedor_libro.innerHTML = "Pendiente Lista favoritos";
+        let HTML = "";
+        let id = 0;
+
+       
+        arreglo_libros_detalle = await request(`http://localhost/PARCIALES/PARCIAL_4/assets/php/lista_favoritos.php?user_id=1`);
+       
+
+        arreglo_libros_detalle.forEach(element => {
+            console.log(element);
+            HTML += obtener_libro( element.titulo, element.imagen_portada, id);
+            id++
+        })
+
+        contenedor_libro.innerHTML = "";
+        contenedor_libro.innerHTML = HTML;
         
     }else{
         contenedor_libro.innerHTML = "";
