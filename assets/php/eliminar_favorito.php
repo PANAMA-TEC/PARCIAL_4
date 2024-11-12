@@ -23,12 +23,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         $resultado = $stmt->get_result();
 
         if ($resultado->num_rows > 0) {
-            // Si el user_id existe, crear instancia de la clase Biblioteca y llamar al método borrarLibroFavorito
-            $biblioteca = new Biblioteca($conexion);
-            $mensaje = $biblioteca->borrarLibroFavorito($user_id, $google_books_id);
+            // Verificar si el libro está en los favoritos del usuario
+            $query_favoritos = "SELECT id FROM libro_favoritos WHERE user_id = ? AND google_books_id = ?";
+            $stmt_favoritos = $conexion->prepare($query_favoritos);
+            $stmt_favoritos->bind_param("is", $user_id, $google_books_id);
+            $stmt_favoritos->execute();
+            $resultado_favoritos = $stmt_favoritos->get_result();
 
-            // Mostrar el mensaje que devuelve la función
-            echo '{"status" : "ok" }';
+            if ($resultado_favoritos->num_rows > 0) {
+                // Si el libro está en los favoritos del usuario, eliminar el libro
+                $biblioteca = new Biblioteca($conexion);
+                $mensaje = $biblioteca->borrarLibroFavorito($user_id, $google_books_id);
+
+                // Mostrar el mensaje que devuelve la función
+                echo '{"status" : "ok" }';
+            } else {
+                // Si el libro no está en favoritos, devolver un mensaje de error
+                echo '{"status" : "error", "message" : "El libro no está en favoritos del usuario" }';
+            }
+
+            // Cerrar el statement de favoritos
+            $stmt_favoritos->close();
         } else {
             // Si el user_id no existe, devolver un mensaje de error
             echo '{"status" : "error", "message" : "El usuario no existe" }';
@@ -38,10 +53,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         $stmt->close();
         $conexion->close();
     } else {
-        // Mostrar el mensaje que devuelve la función
-        echo '{"status" : "error_1" }';
+        // Parámetros insuficientes
+        echo '{"status" : "error_1", "message" : "Parámetros insuficientes" }';
     }
 } else {
-   // Mostrar el mensaje que devuelve la función
-   echo '{"status" : "error_2" }';
+   // Método no permitido
+   echo '{"status" : "error_2", "message" : "Método no permitido" }';
 }

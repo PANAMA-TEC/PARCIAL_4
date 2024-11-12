@@ -69,27 +69,45 @@
         }
         // Función para guardar el usuario 
         public function guardarUsuario($nombre, $email, $user_id) {
-            // Verificar si el usuario ya existe
+            // Verificar si el usuario ya existe en la tabla usuarios
             $query = "SELECT id FROM usuarios WHERE email = ?";
             $stmt = $this->conexion->prepare($query);
+            $stmt->bind_param("s", $email);
             $stmt->execute();
+            $stmt->bind_result($id_usuario);
             $stmt->store_result();
-
+        
             if ($stmt->num_rows > 0) {
-                return "El correo electrónico ya está registrado.";
+                $stmt->fetch(); // Obtener el id del usuario existente
+        
+                // Verificar si el usuario ya está en la tabla libros_guardados
+                $query_libros = "SELECT id FROM libros_guardados WHERE user_id = ?";
+                $stmt_libros = $this->conexion->prepare($query_libros);
+                $stmt_libros->bind_param("i", $id_usuario);
+                $stmt_libros->execute();
+                $stmt_libros->store_result();
+        
+                if ($stmt_libros->num_rows > 0) {
+                    // Usuario ya existe en libros_guardados, devolver el id del usuario
+                    return $id_usuario;
+                } else {
+                    // Usuario existe en usuarios pero no en libros_guardados
+                    return "Usuario registrado pero no en libros_guardados.";
+                }
             }
-
-            // Insertar el usuario
-            $query = "INSERT INTO usuarios (nombre, email, user_id) VALUES (?, ?, ?)";
-            $stmt = $this->conexion->prepare($query);
-            $stmt->bind_param("sss", $nombre, $email, $user_id);
-
-            if ($stmt->execute()) {
+        
+            // Insertar el usuario si no existe
+            $query_insert = "INSERT INTO usuarios (nombre, email, user_id) VALUES (?, ?, ?)";
+            $stmt_insert = $this->conexion->prepare($query_insert);
+            $stmt_insert->bind_param("sss", $nombre, $email, $user_id);
+        
+            if ($stmt_insert->execute()) {
                 return "Usuario registrado con éxito.";
             } else {
                 return "Error al registrar el usuario: " . $this->conexion->error;
             }
         }
+        
     }
 
 
