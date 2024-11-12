@@ -7,8 +7,6 @@ const contenedor_libro = document.getElementById('contenedor_libros');
 const google_login = document.getElementById('google_login');
 
 const close_login = document.getElementById('close_login');
-
-
 const open_login = document.getElementById('open_login');
 
 const formulario_login_card = document.getElementById('formulario_login_card');
@@ -104,12 +102,12 @@ open_login.addEventListener("click", ()=>{
 
 })
 
-
 window.toggle_detalle = toggle_detalle;
 window.arreglo_libros = arreglo_libros;
 window.redirigir = redirigir;
 
-const prepara_contenido = () => {
+const listar_libros = () => {
+
     let HTML = "";
     let id = 0;
 
@@ -135,7 +133,7 @@ setTimeout(() => {
     contenedor_libro.innerHTML = ""
     // console.log(arreglo_libros)
     // console.log(prepara_contenido())
-    contenedor_libro.innerHTML = prepara_contenido();
+    contenedor_libro.innerHTML = listar_libros();
     
 }, 2000);
 
