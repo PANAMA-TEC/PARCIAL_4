@@ -1,8 +1,7 @@
 <?php
 
-echo "<pre>";
-
     include "D:\laragon\www\PARCIALES\PARCIAL_4\keys.php";
+
     
 
     class Biblioteca {
