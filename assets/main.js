@@ -25,10 +25,10 @@ const libro_buscado = "harry";
 const urlParams = new URLSearchParams(window.location.search);
 var libros_disponibles = await request(`${GOOGLE_BOOK_URL}?cantidad_libros=${cantidad_libros}&libro_buscado=${libro_buscado}`);
 var arreglo_libros = libros_disponibles.items;
-var arreglo_libros_detalle = "";
+var arreglo_libros_detalle = arreglo_libros;
 
 
-const libros = (imagen, titulo, id) => {
+const libros = (imagen, titulo_libro, descripcion, autor, ano_publicacion, my_book_id) => {
     
     return `
         <div  class="libro_contenedor_general">
@@ -44,15 +44,15 @@ const libros = (imagen, titulo, id) => {
 
                 </div>
 
-                <div id='book_${id}' class="libro_portada libro_imagen" onclick='toggle_detalle(this.id)' style="background-image: url('${imagen}');">
-
+                <div id='book_${my_book_id}' class="libro_portada libro_imagen" 
+                    onclick="toggle_detalle('${titulo_libro}', '${descripcion}','${imagen}', '${autor}', '${ano_publicacion}', '${my_book_id}')" 
+                    style="background-image: url('${imagen}');">
                 </div>
             
-                
             </div>
 
             <div class='libro_titulo'>
-                ${titulo}
+                ${titulo_libro}
             </div>
         
 
@@ -65,40 +65,41 @@ const toggle_login = () => {
     toggle_element(login);
 }
 
-const toggle_detalle = (id) => {  
+const toggle_detalle = (titulo_libro, descripcion, imagen, autor, ano_publicacion, my_book_id) => {  
 
-    if (id){
-
-        detalle_libro.innerHTML = "";
+    // let my_book_id = id.replace("book_", "");
+    // let book_details = arreglo_libros_detalle[my_book_id];
     
-        let my_book_id = id.replace("book_", "");
-        let book_details = arreglo_libros[my_book_id];
-        
-        let titulo_libro = book_details.volumeInfo.title;
-        let descripcion = book_details.volumeInfo.description;
-        let imagen = book_details.volumeInfo.imageLinks.thumbnail;
-        let autor = book_details.volumeInfo.authors[0];
-        let ano_publicacion = book_details.volumeInfo.publishedDate;
+    // let titulo_libro = book_details.volumeInfo.title;
+    // let descripcion = book_details.volumeInfo.description;
+    // let imagen = book_details.volumeInfo.imageLinks.thumbnail;
+    // let autor = book_details.volumeInfo.authors[0];
+    // let ano_publicacion = book_details.volumeInfo.publishedDate;
+    
 
-        detalle_libro.innerHTML = mostrar_detalles_libros(titulo_libro, descripcion,imagen, autor, ano_publicacion, my_book_id);
-    }
+    detalle_libro.innerHTML = "";
+    detalle_libro.innerHTML = mostrar_detalles_libros(titulo_libro, descripcion,imagen, autor, ano_publicacion, my_book_id);
 
     toggle_element(detalle_libro);
 }
 
-const listar_libros = () => {
+const listar_libros = (array) => {
 
     let HTML = "";
     let id = 0;
 
-    arreglo_libros.forEach(element => {
+    array.forEach(element => {
         
-        let imagen_libro = element.volumeInfo.imageLinks;
-        let titulo = element.volumeInfo.title
-
-        if(imagen_libro && titulo) {
+        let imagen_libro = element.volumeInfo.imageLinks.thumbnail;
+        let titulo_libro = element.volumeInfo.title
+        let descripcion = element.volumeInfo.description;
+        let autor = element.volumeInfo.authors[0];
+        let ano_publicacion = element.volumeInfo.publishedDate;
+        let my_book_id = element.volumeInfo.publishedDate;
+        
+        if(imagen_libro && titulo_libro) {
             // console.log(imagen_libro.thumbnail);
-            HTML += libros(imagen_libro.thumbnail, titulo, id);
+            HTML += libros(imagen_libro, titulo_libro, descripcion, autor, ano_publicacion, my_book_id);
         }
 
         id += 1;
@@ -108,38 +109,38 @@ const listar_libros = () => {
     return HTML;
 }
 
-const obtener_libro = (titulo, imagen_libro, id) => {
+const obtener_libro = (imagen_libro, titulo_libro, descripcion, autor, ano_publicacion, my_book_id) => {
 
-    if(imagen_libro && titulo) {
+    if(imagen_libro && titulo_libro) {
         // console.log(imagen_libro.thumbnail);
-       return libros(imagen_libro, titulo, id);
+       return libros(imagen_libro, titulo_libro, descripcion, autor, ano_publicacion, my_book_id);
     }
 
 }
 
-const agregar_favorito = (id) => {
+const agregar_favorito = (titulo_libro, descripcion,imagen, autor, ano_publicacion, my_book_id) => {
     
     let api = 'http://localhost/PARCIALES/PARCIAL_4/assets/php/guardar_favoritos.php';
 
-    if (id){
+    if (my_book_id && titulo_libro && descripcion && imagen && autor){
 
         detalle_libro.innerHTML = "";
     
-        const my_book_id = id.replace("agregar_favorito_", "");
-        const book_details = arreglo_libros[my_book_id];
+        // const my_book_id = id.replace("agregar_favorito_", "");
+        // const book_details = arreglo_libros[my_book_id];
 
-        const user_id = '1'; 
-        const google_books_id = book_details.id;
-        const titulo = book_details.volumeInfo.title;
-        const autor = book_details.volumeInfo.authors[0];
-        const imagen_portada = book_details.volumeInfo.imageLinks.thumbnail;
+        // const user_id = '1'; 
+        // const google_books_id = book_details.id;
+        // const titulo = book_details.volumeInfo.title;
+        // const autor = book_details.volumeInfo.authors[0];
+        // const imagen_portada = book_details.volumeInfo.imageLinks.thumbnail;
         const resena_personal = "sin resena personal";
-        const descripcion_libro = !book_details.volumeInfo.description ? `
-            Este libro, aunque aún no tiene una descripción detallada, guarda en sus páginas una historia única esperando ser descubierta. A veces, las mejores aventuras son aquellas que no se pueden resumir en unas pocas palabras. Te invitamos a abrir sus páginas y sumergirte en una narrativa que solo tú podrás experimentar. ¿Qué secretos esconde? Solo al leerlo podrás saberlo.    
-        `: book_details.volumeInfo.description ;
+        // const descripcion_libro = !book_details.volumeInfo.description ? `
+        //     Este libro, aunque aún no tiene una descripción detallada, guarda en sus páginas una historia única esperando ser descubierta. A veces, las mejores aventuras son aquellas que no se pueden resumir en unas pocas palabras. Te invitamos a abrir sus páginas y sumergirte en una narrativa que solo tú podrás experimentar. ¿Qué secretos esconde? Solo al leerlo podrás saberlo.    
+        // `: book_details.volumeInfo.description ;
 
         
-        const URL = `${api}?user_id=${encodeURIComponent(user_id)}&google_books_id=${encodeURIComponent(google_books_id)}&titulo=${encodeURIComponent(titulo)}&autor=${encodeURIComponent(autor)}&imagen_portada=${encodeURIComponent(imagen_portada)}&resena_personal=${encodeURIComponent(resena_personal)}&descripcion_libro=${encodeURIComponent(descripcion_libro)}`;
+        const URL = `${api}?user_id=${encodeURIComponent('0')}&google_books_id=${encodeURIComponent(my_book_id)}&titulo=${encodeURIComponent(titulo_libro)}&autor=${encodeURIComponent(autor)}&imagen_portada=${encodeURIComponent(imagen)}&resena_personal=${encodeURIComponent(resena_personal)}&descripcion_libro=${encodeURIComponent(descripcion)}`;
         request(URL);
         toggle_detalle();
         
@@ -147,6 +148,10 @@ const agregar_favorito = (id) => {
         alert('error_detectado');
     }
     
+}
+
+const eliminar_favoritos = (book_id) => {
+    alert(book_id)
 }
 
 boton_formulario.addEventListener("click", (event) => {
@@ -178,7 +183,7 @@ boton_buscador.addEventListener('click', async () => {
         arreglo_libros = libros_disponibles.items;
 
         contenedor_libro.innerHTML = "";
-        contenedor_libro.innerHTML = listar_libros();
+        contenedor_libro.innerHTML = listar_libros(arreglo_libros);
         
     }else{
         alert('not posible');
@@ -188,18 +193,16 @@ boton_buscador.addEventListener('click', async () => {
 
 setTimeout(async () => {
     if (urlParams.get('opcion') == "ver_libros_favoritos" ){
-        
+        alert('falta menos')
         contenedor_libro.innerHTML = "Pendiente Lista favoritos";
         let HTML = "";
         let id = 0;
 
-       
         arreglo_libros_detalle = await request(`http://localhost/PARCIALES/PARCIAL_4/assets/php/lista_favoritos.php?user_id=1`);
        
-
         arreglo_libros_detalle.forEach(element => {
             console.log(element);
-            HTML += obtener_libro( element.titulo, element.imagen_portada, id);
+            HTML += obtener_libro( element.imagen_portada,element.titulo, element.descripcion, element.autor, "ND", element.google_book_id);
             id++
         })
 
@@ -208,7 +211,7 @@ setTimeout(async () => {
         
     }else{
         contenedor_libro.innerHTML = "";
-        contenedor_libro.innerHTML = listar_libros();
+        contenedor_libro.innerHTML = listar_libros(arreglo_libros);
     }
     
 }, 2000);
@@ -217,6 +220,7 @@ window.toggle_detalle = toggle_detalle;
 window.arreglo_libros = arreglo_libros;
 window.redirigir = redirigir;
 window.agregar_favorito = agregar_favorito;
+window.eliminar_favoritos = eliminar_favoritos
 
 
 
