@@ -21,7 +21,7 @@ class Biblioteca {
         }
 
         // Insertar nuevo libro
-        $query = "INSERT INTO libros_guardados (user_id, google_books_id, titulo, autor, imagen_portada, reseña_personal, fecha_guardado) 
+        $query = "INSERT INTO libros_guardados (user_id, google_books_id, titulo, autor, imagen_portada, resena_personal, fecha_guardado) 
                   VALUES (?, ?, ?, ?, ?, ?, NOW())";
         $stmt = $this->conexion->prepare($query);
         $stmt->bind_param("isssss", $user_id, $google_books_id, $titulo, $autor, $imagen_portada, $resena_personal);
@@ -29,13 +29,13 @@ class Biblioteca {
         if ($stmt->execute()) {
             return "Libro guardado como favorito.";
         } else {
-            return "Error al guardar el libro.";
+            return "Error al guardar el libro: " . $this->conexion->error;
         }
     }
 
     // Función para listar los libros guardados
     public function listarLibrosGuardados($user_id) {
-        $query = "SELECT google_books_id, titulo, autor, imagen_portada, reseña_personal, fecha_guardado 
+        $query = "SELECT google_books_id, titulo, autor, imagen_portada, resena_personal, fecha_guardado 
                   FROM libros_guardados WHERE user_id = ?";
         $stmt = $this->conexion->prepare($query);
         $stmt->bind_param("i", $user_id);
@@ -59,12 +59,38 @@ class Biblioteca {
         if ($stmt->execute()) {
             return "Libro eliminado de tus favoritos.";
         } else {
-            return "Error al eliminar el libro.";
+            return "Error al eliminar el libro: " . $this->conexion->error;
+        }
+    }
+      // Función para guardar un nuevo usuario en la base de datos
+      public function guardarUsuario($nombre, $email, $password) {
+        // Verificar si el usuario ya existe
+        $query = "SELECT id FROM usuarios WHERE email = ?";
+        $stmt = $this->conexion->prepare($query);
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $stmt->store_result();
+
+        if ($stmt->num_rows > 0) {
+            return "El usuario ya existe.";
+        }
+
+        // Insertar nuevo usuario
+        $query = "INSERT INTO usuarios (nombre, email, password, fecha_registro) 
+                  VALUES (?, ?, ?, NOW())";
+        $stmt = $this->conexion->prepare($query);
+        $stmt->bind_param("sss", $nombre, $email, $password);
+
+        if ($stmt->execute()) {
+            return "Usuario guardado exitosamente.";
+        } else {
+            return "Error al guardar el usuario: " . $this->conexion->error;
         }
     }
 }
+
 // Crear la conexión a la base de datos
-$conexion = new mysqli("localhost", "root", "pty96", "biblioteca_personal");
+$conexion = new mysqli("localhost", "root", "pty96", "taller_8");
 
 // Verificar si la conexión es exitosa
 if ($conexion->connect_error) {
