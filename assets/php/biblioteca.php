@@ -30,7 +30,7 @@
             $query = "INSERT INTO libros_guardados (user_id, google_books_id, titulo, autor, imagen_portada, resena_personal, descripcion_libro, fecha_guardado) 
                     VALUES (?, ?, ?, ?, ?, ?, ?, NOW())";
             $stmt = $this->conexion->prepare($query);
-            $stmt->bind_param("isssssb", $user_id, $google_books_id, $titulo, $autor, $imagen_portada, $resena_personal, $descripcion_libro);
+            $stmt->bind_param("issssss", $user_id, $google_books_id, $titulo, $autor, $imagen_portada, $resena_personal, $descripcion_libro);
         
             if ($stmt->execute()) {
                 return "Libro guardado como favorito.";

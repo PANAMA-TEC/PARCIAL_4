@@ -19,10 +19,11 @@ const texto_buscado = document.getElementById('libro_buscado');
 const GOOGLE_BOOK_URL = 'http://localhost/PARCIALES/PARCIAL_4/assets/php/GoogleBooks/google_book.php';
 
 //DEFECTOS DEL API DE GOOGLE BOOKS.
-const cantidad_libros = 40;
+const cantidad_libros = 20;
 const libro_buscado = "harry";
-var libros_disponibles = await request(`${GOOGLE_BOOK_URL}?cantidad_libros=${cantidad_libros}&libro_buscado=${libro_buscado}`);
 
+const urlParams = new URLSearchParams(window.location.search);
+var libros_disponibles = await request(`${GOOGLE_BOOK_URL}?cantidad_libros=${cantidad_libros}&libro_buscado=${libro_buscado}`);
 var arreglo_libros = libros_disponibles.items;
 
 
@@ -123,7 +124,9 @@ const agregar_favorito = (id) => {
         const autor = book_details.volumeInfo.authors[0];
         const imagen_portada = book_details.volumeInfo.imageLinks.thumbnail;
         const resena_personal = "sin resena personal";
-        const descripcion_libro = book_details.volumeInfo.description;
+        const descripcion_libro = !book_details.volumeInfo.description ? `
+            Este libro, aunque aún no tiene una descripción detallada, guarda en sus páginas una historia única esperando ser descubierta. A veces, las mejores aventuras son aquellas que no se pueden resumir en unas pocas palabras. Te invitamos a abrir sus páginas y sumergirte en una narrativa que solo tú podrás experimentar. ¿Qué secretos esconde? Solo al leerlo podrás saberlo.    
+        `: book_details.volumeInfo.description ;
 
         
         const URL = `${api}?user_id=${encodeURIComponent(user_id)}&google_books_id=${encodeURIComponent(google_books_id)}&titulo=${encodeURIComponent(titulo)}&autor=${encodeURIComponent(autor)}&imagen_portada=${encodeURIComponent(imagen_portada)}&resena_personal=${encodeURIComponent(resena_personal)}&descripcion_libro=${encodeURIComponent(descripcion_libro)}`;
@@ -135,9 +138,6 @@ const agregar_favorito = (id) => {
     }
     
 }
-
-
-
 
 
 boton_formulario.addEventListener("click", (event) => {
@@ -172,19 +172,19 @@ boton_buscador.addEventListener('click', async () => {
         contenedor_libro.innerHTML = listar_libros();
         
     }else{
-        alert(texto_buscado.value)
         alert('not posible');
     }
     
 })
 
-
-
-
 setTimeout(() => {
-
-    contenedor_libro.innerHTML = "";
-    contenedor_libro.innerHTML = listar_libros();
+    if (urlParams.get('opcion') == "ver_libros_favoritos" ){
+        contenedor_libro.innerHTML = "Pendiente Lista favoritos";
+        
+    }else{
+        contenedor_libro.innerHTML = "";
+        contenedor_libro.innerHTML = listar_libros();
+    }
     
 }, 2000);
 
