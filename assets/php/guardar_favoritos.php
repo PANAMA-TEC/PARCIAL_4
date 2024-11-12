@@ -1,11 +1,12 @@
 <?php
 
 
-    require_once '.\assets\php\biblioteca.php';
+    require_once '.\biblioteca.php';
 
     //conexion a la base de datos
     //include 'conexion.php';
 
+    $conexion = new mysqli("localhost", "root", "", "biblioteca_personal");
 
     if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         // Aquí procesamos los datos enviados por el formulario
@@ -18,32 +19,27 @@
             $imagen_portada = $_GET['imagen_portada'];
             $resena_personal = $_GET['resena_personal'];
             $descripcion_libro = $_GET['descripcion_libro'];
+        
+            if (isset($conexion)) {
+            
+                // Crear una instancia de la clase LibroFavorito
+                $libro = new Biblioteca($conexion);
+    
+                // Llamar a la función para guardar el libro en los favoritos
+                $resultado = $libro->guardarLibroFavorito($user_id, $google_books_id, $titulo, $autor, $imagen_portada, $resena_personal, $descripcion_libro);
+    
+                // Mostrar el resultado
+                echo '{"mensaje":"actualizado"}';
+                $conexion->close();
+            }
+        
         }else{
-            echo 'error en la consulta';
+            echo '{ "error" : "error en la consulta"}';
         }
+
+    }else{
+        echo '{"mensaje":"error al actualizar"}';
     }
-    // Crear una instancia de la clase que contiene la función guardarLibroFavorito
-    $libro = new LibroFavorito($conexion);
-
-
-        // Verificar que la conexión esté disponible
-        if (isset($conexion)) {
-            // Crear una instancia de la clase LibroFavorito
-            $libro = new LibroFavorito($conexion);
-
-            // Llamar a la función para guardar el libro en los favoritos
-            $resultado = $libro->guardarLibroFavorito($user_id, $google_books_id, $titulo, $autor, $imagen_portada, $resena_personal, $descripcion_libro);
-
-            // Mostrar el resultado
-            echo $resultado;
-        } else {
-            echo "Error en la conexión a la base de datos.";
-        }
-    } else {
-        echo "Faltan datos en el formulario.";
-    }
-} else {
-    echo "La solicitud no es POST.";
-}
+    
 
 ?>

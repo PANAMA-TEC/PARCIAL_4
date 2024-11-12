@@ -19,12 +19,24 @@
         background-size: 100% ;
         background-repeat: no-repeat;
         background-position:0px -200px ;
-        align-items: end;
+        align-items: start;
         justify-content: end;
         border-radius: 10px;
         box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
         margin-top: 5px;
         /* border-style: solid; */
+    }
+
+    .titulo_banner {
+        /* font-weight: 30px; */
+        font-size: 30px;
+        margin-left: 50px;
+        margin-bottom: 30px;
+        width: -webkit-fill-available;
+        background-color: rgba(255, 255, 255, 0.498);
+        color: black;
+        padding: 20px;
+        border-radius: 10px 0px 0px 10px;
     }
 
 /* NAVEGADOR SUPERIOR DE LA PAGINA*/
@@ -149,7 +161,13 @@
     .close {
         display: none;
     }
-
+    
+    .card {
+        /* border-style: solid; */
+        padding: 40px;
+        border-radius: 10px;
+        /* width: 50px; */
+    }
    
 
 /*ESTILOS PARA EL BUSCADOR DE LIBROS.*/
@@ -208,8 +226,10 @@
 
     .libro_titulo{
         margin-top: 10px;
+        margin-bottom: 10px;
         color: black;
         font-weight: bold;
+        height: 20px;
 
     }
 
@@ -408,15 +428,33 @@
 
     .login_contenedor_inferior{
         justify-content: space-between;
-        
+       
         height: -webkit-fill-available;
         margin-top: 20px;
 
       
     }
 
+    .login_contenedor_central{
+        gap:10px;
+        padding: 10px;
+
+    }
+
     .login_image {
         height: 100px;  width: 100px; background-repeat: no-repeat; background-size: 100% 100%; border-radius: 50%;
+    }
+
+    .login_usuario_mail{
+        font-size: 20px;
+        /* border-style: solid; */
+        justify-content: center;
+        align-items: center;
+        
+    }
+
+    .space_around {
+        justify-content: space-around;
     }
 
     
