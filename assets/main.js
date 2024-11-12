@@ -14,6 +14,9 @@ const detalle_libro = document.getElementById('detalle_libro');
 const cantidad_libros = 50;
 
 import { toggle_element, redirigir } from "./modules/funcionesGenerales/index.js";
+import { request } from "./modules/request/index.js";
+
+const GOOGLE_BOOK_URL = 'http://localhost\PARCIALES\PARCIAL_4\assets\php\GoogleBooks\google_book.php';
 
 const libros = () => {
     return `
@@ -36,16 +39,13 @@ const libros = () => {
     `;
 } 
 
-
 const toggle_login = () => {
-    
     toggle_element(login);
 }
 
 const toggle_detalle = () => {  
     toggle_element(detalle_libro);
 }
-
 
 boton_formulario.addEventListener("click", (event) => {
     alert("presionado")
@@ -73,7 +73,7 @@ open_login.addEventListener("click", ()=>{
 
 })
 
-
+console.log(request(GOOGLE_BOOK_URL));
 
 setTimeout( ()=>{
     contenedor_libro.innerHTML = "";
