@@ -107,10 +107,11 @@ echo "<pre>";
     $biblioteca = new Biblioteca($conexion);
 
     // Ejemplo de guardar un libro como favorito
-    echo $biblioteca->guardarLibroFavorito(1, "12345", "Título del libro", "Autor", "URL de la imagen", "Mi reseña", "descripcion_libro");
+    //echo $biblioteca->guardarLibroFavorito(1, "12345", "Título del libro", "Autor", "URL de la imagen", "Mi reseña", "descripcion_libro");
 
     // Ejemplo de listar los libros guardados
     $libros = $biblioteca->listarLibrosGuardados(1);
+    //$libros = $biblioteca->listarLibrosGuardados(2);
     print_r($libros);
 
     // Ejemplo de borrar un libro de los favoritos
