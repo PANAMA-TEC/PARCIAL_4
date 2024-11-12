@@ -15,16 +15,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             die("Conexión fallida: " . $conexion->connect_error);
         }
 
-        // Crear instancia de la clase Biblioteca y pasarle la conexión
-        $biblioteca = new Biblioteca($conexion);
+        // Verificar si el user_id existe en la base de datos
+        $query = "SELECT id FROM usuarios WHERE id = ?";
+        $stmt = $conexion->prepare($query);
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $resultado = $stmt->get_result();
 
-        // Llamar al método para borrar el libro
-        $mensaje = $biblioteca->borrarLibroFavorito($user_id, $google_books_id);
+        if ($resultado->num_rows > 0) {
+            // Si el user_id existe, crear instancia de la clase Biblioteca y llamar al método borrarLibroFavorito
+            $biblioteca = new Biblioteca($conexion);
+            $mensaje = $biblioteca->borrarLibroFavorito($user_id, $google_books_id);
 
-        // Mostrar el mensaje que devuelve la función
-        echo '{"status" : "ok" }';
+            // Mostrar el mensaje que devuelve la función
+            echo '{"status" : "ok" }';
+        } else {
+            // Si el user_id no existe, devolver un mensaje de error
+            echo '{"status" : "error", "message" : "El usuario no existe" }';
+        }
 
-        // Cerrar la conexión después de completar la operación
+        // Cerrar el statement y la conexión
+        $stmt->close();
         $conexion->close();
     } else {
         // Mostrar el mensaje que devuelve la función
