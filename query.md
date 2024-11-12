@@ -19,6 +19,7 @@ CREATE TABLE libros_guardados (
     user_id INT,
     google_books_id VARCHAR(50),
     titulo VARCHAR(255),
+    descripcion_libro LONGTEXT,
     autor VARCHAR(255),
     imagen_portada VARCHAR(255),
     resena_personal TEXT,
