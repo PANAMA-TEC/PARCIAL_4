@@ -28,7 +28,7 @@ var arreglo_libros = libros_disponibles.items;
 var arreglo_libros_detalle = arreglo_libros;
 
 
-const libros = (imagen, titulo_libro, descripcion, autor, ano_publicacion, my_book_id) => {
+const libros = (imagen, titulo_libro, descripcion, autor, ano_publicacion, my_book_id, resena_personal) => {
     
     return `
         <div  class="libro_contenedor_general">
@@ -45,7 +45,7 @@ const libros = (imagen, titulo_libro, descripcion, autor, ano_publicacion, my_bo
                 </div>
 
                 <div id='book_${my_book_id}' class="libro_portada libro_imagen" 
-                    onclick="toggle_detalle('${titulo_libro}', '${descripcion}','${imagen}', '${autor}', '${ano_publicacion}', '${my_book_id}')" 
+                    onclick="toggle_detalle('${titulo_libro}', '${descripcion}','${imagen}', '${autor}', '${ano_publicacion}', '${my_book_id}','${resena_personal}')" 
                     style="background-image: url('${imagen}');">
                 </div>
             
@@ -65,20 +65,14 @@ const toggle_login = () => {
     toggle_element(login);
 }
 
-const toggle_detalle = (titulo_libro, descripcion, imagen, autor, ano_publicacion, my_book_id) => {  
+const toggle_detalle = (titulo_libro, descripcion, imagen, autor, ano_publicacion, my_book_id, resena_personal) => {  
 
-    // let my_book_id = id.replace("book_", "");
-    // let book_details = arreglo_libros_detalle[my_book_id];
-    
-    // let titulo_libro = book_details.volumeInfo.title;
-    // let descripcion = book_details.volumeInfo.description;
-    // let imagen = book_details.volumeInfo.imageLinks.thumbnail;
-    // let autor = book_details.volumeInfo.authors[0];
-    // let ano_publicacion = book_details.volumeInfo.publishedDate;
-    
+    if(my_book_id){
+        detalle_libro.innerHTML = "";
+        
+        detalle_libro.innerHTML = mostrar_detalles_libros(titulo_libro, descripcion, imagen, autor, ano_publicacion, my_book_id, resena_personal);
 
-    detalle_libro.innerHTML = "";
-    detalle_libro.innerHTML = mostrar_detalles_libros(titulo_libro, descripcion,imagen, autor, ano_publicacion, my_book_id);
+    }
 
     toggle_element(detalle_libro);
 }
@@ -109,11 +103,11 @@ const listar_libros = (array) => {
     return HTML;
 }
 
-const obtener_libro = (imagen_libro, titulo_libro, descripcion, autor, ano_publicacion, my_book_id) => {
+const obtener_libro = (imagen_libro, titulo_libro, descripcion, autor, ano_publicacion, my_book_id, resena_personal) => {
 
     if(imagen_libro && titulo_libro) {
         // console.log(imagen_libro.thumbnail);
-       return libros(imagen_libro, titulo_libro, descripcion, autor, ano_publicacion, my_book_id);
+       return libros(imagen_libro, titulo_libro, descripcion, autor, ano_publicacion, my_book_id, resena_personal);
     }
 
 }
@@ -121,27 +115,17 @@ const obtener_libro = (imagen_libro, titulo_libro, descripcion, autor, ano_publi
 const agregar_favorito = (titulo_libro, descripcion,imagen, autor, ano_publicacion, my_book_id) => {
     
     let api = 'http://localhost/PARCIALES/PARCIAL_4/assets/php/guardar_favoritos.php';
-
+    let my_resena_personal = document.getElementById('text_area_detalle');
+    
+    let my_resena_personal_value = my_resena_personal.value ? my_resena_personal.value : 'Sin resena';
+    
     if (my_book_id && titulo_libro && descripcion && imagen && autor){
 
         detalle_libro.innerHTML = "";
-    
-        // const my_book_id = id.replace("agregar_favorito_", "");
-        // const book_details = arreglo_libros[my_book_id];
-
-        // const user_id = '1'; 
-        // const google_books_id = book_details.id;
-        // const titulo = book_details.volumeInfo.title;
-        // const autor = book_details.volumeInfo.authors[0];
-        // const imagen_portada = book_details.volumeInfo.imageLinks.thumbnail;
-        const resena_personal = "sin resena personal";
-        // const descripcion_libro = !book_details.volumeInfo.description ? `
-        //     Este libro, aunque aún no tiene una descripción detallada, guarda en sus páginas una historia única esperando ser descubierta. A veces, las mejores aventuras son aquellas que no se pueden resumir en unas pocas palabras. Te invitamos a abrir sus páginas y sumergirte en una narrativa que solo tú podrás experimentar. ¿Qué secretos esconde? Solo al leerlo podrás saberlo.    
-        // `: book_details.volumeInfo.description ;
-
-        
-        const URL = `${api}?user_id=${encodeURIComponent('0')}&google_books_id=${encodeURIComponent(my_book_id)}&titulo=${encodeURIComponent(titulo_libro)}&autor=${encodeURIComponent(autor)}&imagen_portada=${encodeURIComponent(imagen)}&resena_personal=${encodeURIComponent(resena_personal)}&descripcion_libro=${encodeURIComponent(descripcion)}`;
+            
+        const URL = `${api}?user_id=${encodeURIComponent('1')}&google_books_id=${encodeURIComponent(my_book_id)}&titulo=${encodeURIComponent(titulo_libro)}&autor=${encodeURIComponent(autor)}&imagen_portada=${encodeURIComponent(imagen)}&resena_personal=${encodeURIComponent(my_resena_personal_value)}&descripcion_libro=${encodeURIComponent(descripcion)}`;
         request(URL);
+        alert('Libro agregado a la base de datos.');
         toggle_detalle();
         
     }else {
@@ -192,8 +176,9 @@ boton_buscador.addEventListener('click', async () => {
 })
 
 setTimeout(async () => {
+
     if (urlParams.get('opcion') == "ver_libros_favoritos" ){
-        alert('falta menos')
+       
         contenedor_libro.innerHTML = "Pendiente Lista favoritos";
         let HTML = "";
         let id = 0;
@@ -201,8 +186,8 @@ setTimeout(async () => {
         arreglo_libros_detalle = await request(`http://localhost/PARCIALES/PARCIAL_4/assets/php/lista_favoritos.php?user_id=1`);
        
         arreglo_libros_detalle.forEach(element => {
-            console.log(element);
-            HTML += obtener_libro( element.imagen_portada,element.titulo, element.descripcion, element.autor, "ND", element.google_book_id);
+            // console.log(element);
+            HTML += obtener_libro( element.imagen_portada,element.titulo, element.descripcion, element.autor, "ND", element.google_book_id, element.resena_personal);
             id++
         })
 
