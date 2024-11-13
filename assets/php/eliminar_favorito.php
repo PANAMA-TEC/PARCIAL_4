@@ -18,7 +18,7 @@
             $biblioteca = new Biblioteca($conexion);
 
             // Llamar al método para borrar el libro
-            $mensaje = $biblioteca->borrarLibroFavorito($_SESSION['array_id'], $google_books_id);
+            $mensaje = $biblioteca->borrarLibroFavorito($_SESSION['user_id'], $google_books_id);
 
             // Mostrar el mensaje que devuelve la función
             echo '{"status" : "ok" }';
