@@ -23,9 +23,10 @@ const cantidad_libros = 20;
 const libro_buscado = "harry";
 
 const urlParams = new URLSearchParams(window.location.search);
-var libros_disponibles = await request(`${GOOGLE_BOOK_URL}?cantidad_libros=${cantidad_libros}&libro_buscado=${libro_buscado}`);
-var arreglo_libros = libros_disponibles.items;
-var arreglo_libros_detalle = arreglo_libros;
+
+var libros_disponibles = "";
+var arreglo_libros = "";
+var arreglo_libros_detalle = "";
 
 
 const libros = (imagen, titulo_libro, descripcion, autor, ano_publicacion, my_book_id, resena_personal) => {
@@ -209,6 +210,11 @@ setTimeout(async () => {
         contenedor_libro.innerHTML = HTML;
         
     }else{
+
+        libros_disponibles = await request(`${GOOGLE_BOOK_URL}?cantidad_libros=${cantidad_libros}&libro_buscado=${libro_buscado}`);
+        arreglo_libros = libros_disponibles.items;
+        arreglo_libros_detalle = arreglo_libros;
+
         contenedor_libro.innerHTML = "";
         contenedor_libro.innerHTML = listar_libros(arreglo_libros);
     }
