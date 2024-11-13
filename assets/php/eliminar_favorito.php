@@ -22,13 +22,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         $mensaje = $biblioteca->borrarLibroFavorito($user_id, $google_books_id);
 
         // Mostrar el mensaje que devuelve la función
-        echo $mensaje;
+        echo '{"status" : "ok" }';
 
         // Cerrar la conexión después de completar la operación
         $conexion->close();
     } else {
-        echo "Faltan parámetros: user_id o google_books_id.";
+        // Mostrar el mensaje que devuelve la función
+        echo '{"status" : "error_1" }';
     }
 } else {
-    echo "Este script solo procesa solicitudes GET.";
+   // Mostrar el mensaje que devuelve la función
+   echo '{"status" : "error_2" }';
 }
