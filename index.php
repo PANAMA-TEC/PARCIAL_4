@@ -30,16 +30,16 @@
           $validador = $biblioteca->guardarUsuario($user_information['name'], $user_information['email'], $user_information['id']);
 
           if($validador){
-            $_SESSION['user_id'] = $usuario_existente['id'];           
+            $_SESSION['array_id'] = $usuario_existente['id'];           
           }  
         }
       }
     }
     
 
-  if (isset($_SESSION['array_id'])){
-    echo $_SESSION['array_id'];
-  }
+  // if (isset($_SESSION['array_id'])){
+  //   echo $_SESSION['array_id'];
+  // }
 
 ?>
 

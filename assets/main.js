@@ -77,6 +77,15 @@ const toggle_detalle = (titulo_libro, descripcion, imagen, autor, ano_publicacio
 
     toggle_element(detalle_libro);
 }
+const  HtmlEncode = (text) => {
+    let mod_text = text;
+    
+    if(mod_text){
+        return mod_text = text.replaceAll('"', " ");
+        console.log(mod_text);
+    }
+    // return mod_text;
+}
 
 const listar_libros = (array) => {
 
@@ -84,18 +93,36 @@ const listar_libros = (array) => {
     let id = 0;
 
     array.forEach(element => {
+        let imagen_libro = "";
+        let titulo_libro = "";
+        let descripcion = "";
+        let autor = "";
+        let ano_publicacion = "";
+        let my_book_id = "";
         
-        let imagen_libro = element.volumeInfo.imageLinks.thumbnail;
-        let titulo_libro = element.volumeInfo.title
-        let descripcion = element.volumeInfo.description;
-        let autor = element.volumeInfo.authors[0];
-        let ano_publicacion = element.volumeInfo.publishedDate;
-        let my_book_id = element.volumeInfo.publishedDate;
-        
+        try{
+
+            imagen_libro =  HtmlEncode(element.volumeInfo.imageLinks.thumbnail);
+            titulo_libro =  HtmlEncode(element.volumeInfo.title);
+            descripcion = HtmlEncode(element.volumeInfo.description);
+    
+            autor =  typeof element.volumeInfo.authors[0] !== undefined  ? HtmlEncode(element.volumeInfo.authors[0]) :" ND";
+            ano_publicacion =  HtmlEncode(element.volumeInfo.publishedDate);
+            my_book_id =  HtmlEncode(element.id);
+
+           
+            
+            
+        }catch(error){
+            console.log(error);
+        }
+
         if(imagen_libro && titulo_libro) {
             // console.log(imagen_libro.thumbnail);
             HTML += libros(imagen_libro, titulo_libro, descripcion, autor, ano_publicacion, my_book_id);
         }
+
+        
 
         id += 1;
             
@@ -113,7 +140,7 @@ const obtener_libro = (imagen_libro, titulo_libro, descripcion, autor, ano_publi
 
 }
 
-const agregar_favorito = (titulo_libro, descripcion,imagen, autor, ano_publicacion, my_book_id) => {
+const agregar_favorito = (titulo_libro, descripcion, imagen, autor, ano_publicacion, my_book_id) => {
     
     let api = 'http://localhost/PARCIALES/PARCIAL_4/assets/php/guardar_favoritos.php';
     let my_resena_personal = document.getElementById('text_area_detalle');
@@ -125,8 +152,21 @@ const agregar_favorito = (titulo_libro, descripcion,imagen, autor, ano_publicaci
         detalle_libro.innerHTML = "";
             
         const URL = `${api}?user_id=${encodeURIComponent('1')}&google_books_id=${encodeURIComponent(my_book_id)}&titulo=${encodeURIComponent(titulo_libro)}&autor=${encodeURIComponent(autor)}&imagen_portada=${encodeURIComponent(imagen)}&resena_personal=${encodeURIComponent(my_resena_personal_value)}&descripcion_libro=${encodeURIComponent(descripcion)}`;
-        request(URL);
-        alert('Libro agregado a la base de datos.');
+        
+        let mensaje = request(URL);    
+
+        if(mensaje.mensaje == "00x1"){
+
+            alert('Libro no agregado hubo error en el usuario.');
+
+        }
+        
+        if(mensaje.mensaje == "actualizado"){
+
+            alert('Libro agregado a la base de datos.');
+
+        }
+
         toggle_detalle();
         
     }else {
@@ -135,23 +175,24 @@ const agregar_favorito = (titulo_libro, descripcion,imagen, autor, ano_publicaci
     
 }
 
-// const eliminar_favoritos = (book_id) => {
-//     let api = 'http://localhost/PARCIALES/PARCIAL_4/assets/php/guardar_favoritos.php';
+const eliminar_favoritos = (book_id) => {
+    let api = 'http://localhost/PARCIALES/PARCIAL_4/assets/php/eliminar_favorito.php';
 
-//     if (book_id){
+    if (book_id){
 
-//         detalle_libro.innerHTML = "";
+        detalle_libro.innerHTML = "";
             
-//         const URL = `${api}?google_books_id=${encodeURIComponent(book_id)}`;
-//         request(URL);
-//         alert('Libro eliminado a la base de datos.');
-//         toggle_detalle();
+        const URL = `${api}?google_books_id=${encodeURIComponent(book_id)}`;
+        request(URL);
+        alert('Libro eliminado a la base de datos.');
+        toggle_detalle();
+        reload_favoritos();
         
-//     }else {
-//         alert('error_detectado');
-//     }
+    }else {
+        alert('error_detectado');
+    }
 
-// }
+}
 
 boton_formulario.addEventListener("click", (event) => {
     alert("presionado")
@@ -181,6 +222,8 @@ boton_buscador.addEventListener('click', async () => {
         libros_disponibles = await request(`${GOOGLE_BOOK_URL}?cantidad_libros=${cantidad_libros}&libro_buscado=${termino_busqueda}`);
         arreglo_libros = libros_disponibles.items;
 
+        console.log(arreglo_libros);
+
         contenedor_libro.innerHTML = "";
         contenedor_libro.innerHTML = listar_libros(arreglo_libros);
         
@@ -190,24 +233,28 @@ boton_buscador.addEventListener('click', async () => {
     
 })
 
-setTimeout(async () => {
-
-    if (urlParams.get('opcion') == "ver_libros_favoritos" ){
-       
-        contenedor_libro.innerHTML = "Pendiente Lista favoritos";
+const reload_favoritos = async () => {
+    contenedor_libro.innerHTML = "Pendiente Lista favoritos";
         let HTML = "";
         let id = 0;
 
         arreglo_libros_detalle = await request(`http://localhost/PARCIALES/PARCIAL_4/assets/php/lista_favoritos.php?user_id=1`);
        
         arreglo_libros_detalle.forEach(element => {
-            // console.log(element);
-            HTML += obtener_libro( element.imagen_portada,element.titulo, element.descripcion, element.autor, "ND", element.google_book_id, element.resena_personal);
+            // console.log(element); 
+            HTML += obtener_libro( HtmlEncode(element.imagen_portada), HtmlEncode( element.titulo),  HtmlEncode( element.descripcion),  HtmlEncode( element.autor), "ND",  HtmlEncode( element.google_book_id),  HtmlEncode( element.resena_personal));
             id++
         })
 
         contenedor_libro.innerHTML = "";
         contenedor_libro.innerHTML = HTML;
+}
+
+setTimeout(async () => {
+
+    if (urlParams.get('opcion') == "ver_libros_favoritos" ){
+       
+        reload_favoritos();
         
     }else{
 

@@ -4,12 +4,13 @@
     session_start();
 
     if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-        if (isset($_GET['user_id']) && isset($_GET['google_books_id']) && isset($_SESSION['array_id'])) {
-            $user_id = $_GET['user_id'];
+        if (isset($_SESSION['array_id']) && isset($_GET['google_books_id']) && isset($_SESSION['array_id'])) {
+            
+            $user_id = $_SESSION['array_id'];
             $google_books_id = $_GET['google_books_id'];
 
             // Crear la conexión a la base de datos (puedes moverla a la clase si prefieres)
-            $conexion = new mysqli("localhost", "root", "pty96", "biblioteca_personal");
+            $conexion = new mysqli("localhost", "root", "", "biblioteca_personal");
             if ($conexion->connect_error) {
                 die("Conexión fallida: " . $conexion->connect_error);
             }

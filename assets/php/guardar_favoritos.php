@@ -2,6 +2,7 @@
 
 
     require_once '.\biblioteca.php';
+    session_start();
 
     //conexion a la base de datos
     //include 'conexion.php';
@@ -10,9 +11,11 @@
 
     if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         // Aquí procesamos los datos enviados por el formulario
-        if (isset($_GET['user_id']) && isset($_GET['google_books_id']) && isset($_GET['titulo']) && isset($_GET['autor']) && isset($_GET['imagen_portada']) && isset($_GET['resena_personal']) && isset($_GET['descripcion_libro'])) {
+        if (isset($_SESSION['array_id']) && isset($_GET['google_books_id']) && isset($_GET['titulo']) && isset($_GET['autor']) && isset($_GET['imagen_portada']) && isset($_GET['resena_personal']) && isset($_GET['descripcion_libro'])) {
             // Acceder a los datos enviados por GET
-            $user_id = $_GET['user_id'];
+            // echo "<pre> mysession" . $_SESSION['user_id'] . "</pre>";
+            
+            $user_id = $_SESSION['array_id'];
             $google_books_id = $_GET['google_books_id'];
             $titulo = $_GET['titulo'];
             $autor = $_GET['autor'];
@@ -34,7 +37,13 @@
             }
         
         }else{
-            echo '{ "error" : "error en la consulta"}';
+            
+            if (!isset($_SESSION['array_id'])){
+                
+                echo '{ "error" : "00x1"}';
+            }else{
+                echo '{ "error" : "consulta faltan parametros"}';
+            }
         }
 
     }else{
