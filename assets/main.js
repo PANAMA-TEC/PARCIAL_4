@@ -159,13 +159,12 @@ const agregar_favorito = (titulo_libro, descripcion, imagen, autor, ano_publicac
 
             alert('Libro no agregado hubo error en el usuario.');
 
-        }
-        
-        if(mensaje.mensaje == "actualizado"){
+        }else{
 
             alert('Libro agregado a la base de datos.');
-
         }
+        
+        
 
         toggle_detalle();
         

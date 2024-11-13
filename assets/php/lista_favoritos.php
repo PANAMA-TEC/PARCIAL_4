@@ -7,9 +7,9 @@
     if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         // Verificar si el user_id está presente en la URL
         
-        if (isset($_SESSION['user_id']) && is_numeric($_GET['user_id']) && isset($_SESSION['user_id'])) {
+        if (isset($_SESSION['array_id']) && is_numeric($_GET['user_id']) && isset($_SESSION['array_id'])) {
             // Acceder al user_id pasado por la URL (GET)
-            $user_id = $_SESSION['user_id'];
+            $user_id = $_SESSION['array_id'];
             // Crear una instancia de la clase Biblioteca, pasando la conexión a la base de datos
             $biblioteca = new Biblioteca($conexion);
 
