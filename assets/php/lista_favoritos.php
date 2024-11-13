@@ -34,6 +34,7 @@
                 }
                 
                 echo json_encode($json);
+                $conexion->close();
             } else {
                 echo "No se encontraron libros guardados para el usuario $user_id.";
             }

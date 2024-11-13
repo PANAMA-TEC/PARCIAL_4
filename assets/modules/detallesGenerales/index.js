@@ -12,10 +12,8 @@ export const mostrar_detalles_libros = (titulo_libro, descripcion, imagen, autor
     if (!urlParams.get('opcion')){
         not_print_eliminar = "none";
     }
-
-
     
-    console.log('resena:' + resena_personal);
+    // console.log('resena:' + resena_personal);
     
     descripcion = descripcion == 'undefined'? `Este libro, aunque aún no tiene una descripción detallada, guarda en sus páginas una historia única esperando ser descubierta. A veces, las mejores aventuras son aquellas que no se pueden resumir en unas pocas palabras. Te invitamos a abrir sus páginas y sumergirte en una narrativa que solo tú podrás experimentar. ¿Qué secretos esconde? Solo al leerlo podrás saberlo.` : descripcion;
     resena_personal = resena_personal == 'undefined' ?  "Agrega un texto para tu resena" : resena_personal ;
