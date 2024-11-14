@@ -46,7 +46,7 @@ export const mostrar_detalles_libros = (titulo_libro, descripcion, imagen, autor
 
                 </div>
 
-                <textarea id='text_area_detalle' text='' style=" padding:20px; margin-bottom: 20px; height: 200px; margin-top: 20px;">${resena_personal}</textarea>
+                <textarea id='text_area_detalle' text='' style=" padding:20px; margin-bottom: 20px; height: 15vh; margin-top: 20px;" placeholder='${resena_personal}'></textarea>
 
                 <div class="detalle_libro_detalles_opciones row">
 
