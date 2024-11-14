@@ -21,10 +21,9 @@ export const mostrar_detalles_libros = (titulo_libro, descripcion, imagen, autor
 
     return `
         
-        <div class="detalle_libro_contenedor row">
-
-            <img src='${imagen}' width=60%;' style=''>
-
+        <div class="detalle_libro_contenedor row" style="background-size: 100% 100%;">
+            <img src='${imagen}' width=50%; height="100%"' class="shadow">
+           
             <div class="detalle_libro_detalles col" style="position: relative;">
 
                 <div class="detalle_libro_detalles_informacion col">

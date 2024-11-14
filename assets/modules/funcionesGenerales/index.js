@@ -18,3 +18,17 @@ export const redirigir = (mylink) => {
     // Redirigir a la página deseada
     window.location.href = mylink;
 }
+
+
+export const  HtmlEncode = (text) => {
+    let mod_text = text;
+    
+    if(mod_text){
+        mod_text = text.replaceAll('"', " ");
+        mod_text = mod_text.replaceAll("'", " ");
+
+        return mod_text;
+        console.log(mod_text);
+    }
+    // return mod_text;
+}

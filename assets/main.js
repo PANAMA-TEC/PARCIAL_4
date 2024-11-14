@@ -1,4 +1,4 @@
-import { toggle_element, redirigir } from "./modules/funcionesGenerales/index.js";
+import { toggle_element, redirigir, HtmlEncode } from "./modules/funcionesGenerales/index.js";
 import { request } from "./modules/request/index.js";
 import { mostrar_detalles_libros } from "./modules/detallesGenerales/index.js";
 import { libros } from "./modules/libros/index.js";
@@ -102,7 +102,6 @@ const eliminar_favoritos = (book_id) => {
 }
 
 
-
 const reload_favoritos = async () => {
     
     contenedor_libro.innerHTML = "Pendiente Lista favoritos";
@@ -124,19 +123,6 @@ const reload_favoritos = async () => {
 
 const toggle_login = () => {
     toggle_element(login);
-}
-
-const  HtmlEncode = (text) => {
-    let mod_text = text;
-    
-    if(mod_text){
-        mod_text = text.replaceAll('"', " ");
-        mod_text = mod_text.replaceAll("'", " ");
-
-        return mod_text;
-        console.log(mod_text);
-    }
-    // return mod_text;
 }
 
 const listar_libros = (array) => {
@@ -181,7 +167,6 @@ const listar_libros = (array) => {
 }
 
 
-
 boton_formulario.addEventListener("click", (event) => {
     alert("presionado")
 });
@@ -220,11 +205,6 @@ boton_buscador.addEventListener('click', async () => {
     }
     
 })
-
-
-
-
-
 
 setTimeout(async () => {
 

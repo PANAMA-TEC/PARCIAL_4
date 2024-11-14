@@ -7,45 +7,40 @@
 
   if (isset($_SESSION['access_token'])) {
     
-    echo "<div class='row login_msg'>SESSION INICIADA</div>";
+    
     $user_information = get_user_information($_SESSION['access_token']);
 
 
     if (isset($user_information['id'], $user_information['name'], $user_information['email'], $user_information['id'])) {
       
-      
       $conexion = new mysqli("localhost", "root", "", "biblioteca_personal");
       $biblioteca = new Biblioteca($conexion);
       $usuario_existente = $biblioteca->validar_existencia_usuario($user_information['id']);
-      $conexion->close();
       
       // print_r($usuario_existente);
       if( $usuario_existente ){
-  
+        
+        echo "<div class='row login_msg'>SESSION INICIADA</div>";
         // print_r($usuario_existente);
         $_SESSION['array_id'] = $usuario_existente[0]['id'];
   
       }else{
 
-          
           $validador = $biblioteca->guardarUsuario($user_information['name'], $user_information['email'], $user_information['id']);
-  
-          if($validador){
-            $_SESSION['array_id'] = $usuario_existente['id'];           
-          }
+          $usuario_existente = $biblioteca->validar_existencia_usuario($user_information['id']);
 
-        
+          if($usuario_existente){
+            $_SESSION['array_id'] = $usuario_existente[0]['id'];           
+          }
+          
+          echo "<div class='row login_msg'>SESSION INICIADA</div>";
+          $conexion->close();
+
       }
+
     }
 
-  }else{
-
   }
-  
-
-  // if (isset($_SESSION['array_id'])){
-  //   echo $_SESSION['array_id'];
-  // }
 
 ?>
 
@@ -141,12 +136,15 @@
     </div>
     
     <div class="login_contenedor_inferior col">
+      
       <?php if (!isset($_SESSION['access_token'])): ?>
         <div class="col formulario_login_card"'>
       <?php else: ?>
         <div id="formulario_login_card" class="col formulario_login_card" style='display:none;'> 
       <?php endif; ?>
+
           <label class="font_tittles"> Login de usuarios</label>
+
           <form class="col formulario_login_main" method="post" action="./assets/php/login.php">
             
             <div class="col">
@@ -166,9 +164,10 @@
             <button id="btn_login_formulario" class="login_button">Iniciar Sesion</button>
       
           </form>
+
         </div>
     
-      <?php if (isset($_SESSION['access_token'])): ?>
+      <?php if (isset($user_information)): ?>
         
         <div class='login_contenedor_central col'>
           <div class='card shadow row space_around'>
@@ -184,6 +183,7 @@
 
           </div>
         </div>
+        
         <button id="logout" class='login_button login_button_logout clickeable' onclick="redirigir('http://localhost/PARCIALES/PARCIAL_4/assets/php/logout.php')"> CERRAR SESSION </button>
     
       <?php endif; ?>
