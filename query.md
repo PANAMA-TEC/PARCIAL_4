@@ -1,8 +1,8 @@
 -- Crear la base de datos
-CREATE DATABASE mi_proyecto;
+CREATE DATABASE biblioteca_personal;
  
 -- Seleccionar la base de datos
-USE mi_proyecto;
+USE biblioteca_personal;
  
 -- Crear la tabla de usuarios
 CREATE TABLE usuarios (
