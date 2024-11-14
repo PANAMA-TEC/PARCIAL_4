@@ -1,5 +1,6 @@
 import { toggle_element, redirigir, HtmlEncode } from "./modules/funcionesGenerales/index.js";
 import { request } from "./modules/request/index.js";
+
 import { mostrar_detalles_libros } from "./modules/detallesGenerales/index.js";
 import { libros } from "./modules/libros/index.js";
 
@@ -87,7 +88,8 @@ const eliminar_favoritos = (book_id) => {
 
     if (book_id){
 
-        detalle_libro.innerHTML = "";    
+        detalle_libro.innerHTML = "";
+        contenedor_libro.innerHTML = '';    
         const URL = `${api}?google_books_id=${encodeURIComponent(book_id)}`;
         
         request(URL);
@@ -103,7 +105,7 @@ const eliminar_favoritos = (book_id) => {
 
 
 const reload_favoritos = async () => {
-    
+    contenedor_libro.innerHTML = '';
     contenedor_libro.innerHTML = "Pendiente Lista favoritos";
     let HTML = "";
     let id = 0;
